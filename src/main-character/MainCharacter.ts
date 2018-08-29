@@ -37,9 +37,15 @@ export default class MainCharacter {
         this.velocity = this.velocity.multiply(MOVEMENT_DUMP);
 
         const targetPosition: Point = this.position.addVector(this.velocity);
+        const targetPositionX: Point = new Point(targetPosition.x, this.position.y);
+        const targetPositionY: Point = new Point(this.position.x, targetPosition.y);
         this.world.roomWalls.forEach((wall) => {
-            if (intersectAABB(this.getAABB(targetPosition), wall)) {
-                this.velocity = this.velocity.multiply(0);
+            if (intersectAABB(this.getAABB(targetPositionX), wall)) {
+                this.velocity.x = 0;
+            }
+
+            if (intersectAABB(this.getAABB(targetPositionY), wall)) {
+                this.velocity.y = 0;
             }
         })
 
