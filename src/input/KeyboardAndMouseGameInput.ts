@@ -4,13 +4,12 @@ import InputBinding from './InputBinding';
 
 export default class KeyboardAndMouseGameInput implements GameInput {
     public bindings: AllInputBindings = {
-        moveForward: getInitialInputBindingValue('moveForward', ['w', 'W', 'z', 'Z']),
-        moveBackward: getInitialInputBindingValue('moveBackward', ['s', 'S']),
-        strafeLeft: getInitialInputBindingValue('strafeLeft', ['a', 'A', 'q', 'Q']),
-        strafeRight: getInitialInputBindingValue('strafeRight', ['d', 'D']),
-        rotateLeft: getInitialInputBindingValue('rotateLeft', ['MML']),
-        rotateRight: getInitialInputBindingValue('rotateRight', ['MMR']),
-        shoot: getInitialInputBindingValue('shoot', ['LMB']),
+        moveUp: getInitialInputBindingValue('moveUp', ['w', 'W', 'z', 'Z', 'ArrowUp']),
+        moveDown: getInitialInputBindingValue('moveDown', ['s', 'S', 'ArrowDown']),
+        moveLeft: getInitialInputBindingValue('moveLeft', ['a', 'A', 'q', 'Q', 'ArrowLeft']),
+        moveRight: getInitialInputBindingValue('moveRight', ['d', 'D', 'ArrowRight']),
+        jump: getInitialInputBindingValue('jump', ['Shift', 'RMB']),
+        attack: getInitialInputBindingValue('attack', ['LMB', ' ']),
     };
 
     private canvas: HTMLCanvasElement;
@@ -54,19 +53,19 @@ export default class KeyboardAndMouseGameInput implements GameInput {
     private initMouse(): void {
         this.canvas.oncontextmenu = () => false;
 
-        this.canvas.addEventListener('mousemove', (event: MouseEvent) => {
-            if (event.movementX < 0) {
-                this.updateInput('MML', event.movementX);
-            } else {
-                this.updateInput('MML', 0);
-            }
-
-            if (event.movementX > 0) {
-                this.updateInput('MMR', event.movementX);
-            } else {
-                this.updateInput('MMR', 0);
-            }
-        });
+        // this.canvas.addEventListener('mousemove', (event: MouseEvent) => {
+        //     if (event.movementX < 0) {
+        //         this.updateInput('MML', event.movementX);
+        //     } else {
+        //         this.updateInput('MML', 0);
+        //     }
+        //
+        //     if (event.movementX > 0) {
+        //         this.updateInput('MMR', event.movementX);
+        //     } else {
+        //         this.updateInput('MMR', 0);
+        //     }
+        // });
 
         this.canvas.addEventListener('mousedown', (event: MouseEvent) => {
             this.canvas.requestPointerLock();

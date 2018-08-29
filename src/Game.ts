@@ -55,7 +55,7 @@ export default class Game {
     }
 
     private render(): void {
-        this.gameRenderer.render();
+        this.gameRenderer.render(this.world);
     }
 
     private initFpsStats(): void {
