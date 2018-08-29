@@ -1,7 +1,7 @@
-import Size from "../../helpers/Size";
-import MainCharacter from "../main-character/MainCharacter";
-import World from "../world/World";
-import AABB from "../../helpers/AABB";
+import Size from '../../helpers/Size';
+import MainCharacter from '../main-character/MainCharacter';
+import World from '../world/World';
+import AABB from '../../helpers/AABB';
 
 export const canvasSize: Size = {
     width: 800,
@@ -20,6 +20,7 @@ export default class GameRenderer {
 
     public render(world: World): void {
         this.clearCanvas();
+        this.renderWalls(world.roomWalls);
         this.renderPlayer(world.player);
     }
 
@@ -27,6 +28,13 @@ export default class GameRenderer {
         const playerAABB: AABB = player.getAABB();
         this.context.fillStyle = 'tomato';
         this.context.fillRect(playerAABB.x, playerAABB.y, playerAABB.width, playerAABB.height);
+    }
+
+    private renderWalls(walls: AABB[]) {
+        this.context.fillStyle = '#211';
+        walls.forEach((wall) => {
+            this.context.fillRect(wall.x, wall.y, wall.width, wall.height);
+        });
     }
 
     private clearCanvas(): void {

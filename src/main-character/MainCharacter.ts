@@ -1,21 +1,24 @@
 import PlayerCharacterInputManager from './PlayerCharacterInputManager';
 import Point from '../../helpers/Point';
 import Vector from '../../helpers/Vector';
-import {worldSize} from '../world/World';
+import World, {worldSize} from '../world/World';
 import AABB from '../../helpers/AABB';
-import Size from "../../helpers/Size";
+import Size from '../../helpers/Size';
+import intersectAABB from "../../helpers/intersectAABB";
 
 const MOVEMENT_ACCELERATION: number = 0.4;
 const MOVEMENT_DUMP: number = 0.9;
 
 export default class MainCharacter {
+    public world: World;
     private inputManager: PlayerCharacterInputManager;
     private inputVelocity: Vector;
     private velocity: Vector;
     private position: Point;
     private mask: Size;
 
-    constructor() {
+    constructor(world: World) {
+        this.world = world;
         this.inputManager = new PlayerCharacterInputManager();
         this.inputVelocity = new Vector(0, 0);
         this.velocity = new Vector(0, 0);
@@ -32,6 +35,14 @@ export default class MainCharacter {
 
         this.velocity = this.velocity.add(this.inputVelocity);
         this.velocity = this.velocity.multiply(MOVEMENT_DUMP);
+
+        const targetPosition: Point = this.position.addVector(this.velocity);
+        this.world.roomWalls.forEach((wall) => {
+            if (intersectAABB(this.getAABB(targetPosition), wall)) {
+                this.velocity = this.velocity.multiply(0);
+            }
+        })
+
         this.position = this.position.addVector(this.velocity);
     }
 
@@ -59,10 +70,11 @@ export default class MainCharacter {
         console.log('attack');
     }
 
-    getAABB(): AABB {
+    getAABB(targetPosition?: Point): AABB {
+        const position: Point = targetPosition ? targetPosition : this.position;
         return {
-            x: this.position.x - this.mask.width / 2,
-            y: this.position.y - this.mask.height / 2,
+            x: position.x - this.mask.width / 2,
+            y: position.y - this.mask.height / 2,
             width: this.mask.width,
             height: this.mask.height,
         }
