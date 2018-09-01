@@ -2,6 +2,7 @@ import Size from '../../helpers/Size';
 import World from '../world/World';
 import AABB from '../../helpers/AABB';
 import MainCharacterRenderer from './MainCharacterRenderer';
+import FlyswatRenderer from './FlyswatRenderer';
 
 export const canvasSize: Size = {
     width: 800,
@@ -13,17 +14,21 @@ export default class GameRenderer {
     private context!: CanvasRenderingContext2D;
 
     private mainCharacterRenderer: MainCharacterRenderer;
+    private flyswatRenderer: FlyswatRenderer;
 
     public constructor() {
+
         this.createCanvas();
         this.attachCanvas();
 
         this.mainCharacterRenderer = new MainCharacterRenderer(this.context);
+        this.flyswatRenderer = new FlyswatRenderer(this.context);
     }
 
     public render(world: World): void {
         this.clearCanvas();
         this.renderWalls(world.roomWalls);
+        this.flyswatRenderer.render(world);
         this.mainCharacterRenderer.render(world.player);
     }
 

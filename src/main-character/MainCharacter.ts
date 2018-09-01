@@ -2,33 +2,34 @@ import PlayerCharacterInputManager from './PlayerCharacterInputManager';
 import Point from '../../helpers/Point';
 import Vector from '../../helpers/Vector';
 import World, {worldSize} from '../world/World';
-import AABB from '../../helpers/AABB';
-import Size from '../../helpers/Size';
-import intersectAABB from "../../helpers/intersectAABB";
+import intersectAABB from '../../helpers/intersectAABB';
+import WorldObject from '../world/WorldObject';
 
 const MOVEMENT_ACCELERATION: number = 0.4;
 const MOVEMENT_DUMP: number = 0.9;
 
-export default class MainCharacter {
-    public world: World;
+export default class MainCharacter extends WorldObject {
     private inputManager: PlayerCharacterInputManager;
     private inputVelocity: Vector;
     private velocity: Vector;
     public position: Point;
     public forward: Vector;
-    private mask: Size;
 
     constructor(world: World) {
-        this.world = world;
+        super({
+            world,
+            position: new Point(worldSize.width/2, worldSize.height/2),
+            collisionMask: {
+                width: 16,
+                height: 16,
+            },
+        });
+
         this.inputManager = new PlayerCharacterInputManager();
         this.inputVelocity = new Vector(0, 0);
         this.velocity = new Vector(0, 0);
         this.position = new Point(worldSize.width/2, worldSize.height/2);
         this.forward = new Vector(0, 1);
-        this.mask = {
-            width: 16,
-            height: 16,
-        };
     }
 
     public update(): void {
@@ -80,30 +81,7 @@ export default class MainCharacter {
 
     public attack(): void {
         console.log('attack');
+        const flyswatPosition: Point = this.position.addVector(this.forward.multiply(100));
+        this.world.flyswat.hit(flyswatPosition);
     }
-
-    getAABB(AABBOptions: AABBOptions = {}): AABB {
-        const position: Point = AABBOptions.targetPosition ? AABBOptions.targetPosition : this.position;
-
-        if (AABBOptions.roundPositions) {
-            return {
-                x: Math.round(position.x - this.mask.width / 2),
-                y: Math.round(position.y - this.mask.height / 2),
-                width: this.mask.width,
-                height: this.mask.height,
-            }
-        }
-
-        return {
-            x: position.x - this.mask.width / 2,
-            y: position.y - this.mask.height / 2,
-            width: this.mask.width,
-            height: this.mask.height,
-        }
-    }
-}
-
-interface AABBOptions {
-    targetPosition?: Point,
-    roundPositions?: boolean,
 }
