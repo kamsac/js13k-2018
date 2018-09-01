@@ -9,7 +9,7 @@ export default class MainCharacterRenderer {
         this.context = context;
     }
 
-    public render(player: MainCharacter) {
+    public render(player: MainCharacter): void {
         const playerAABB: AABB = player.getAABB({roundPositions: true});
         const spriteSize: Size = {
             width: 64,
@@ -20,9 +20,11 @@ export default class MainCharacterRenderer {
         this.drawCharacter(player, spriteSize, playerAABB);
     }
 
-    private drawCharacter(player: MainCharacter, spriteSize: Size, playerAABB: AABB) {
+    private drawCharacter(player: MainCharacter, spriteSize: Size, playerAABB: AABB): void {
+        const direction: string = player.forward.direction();
+
         this.context.drawImage(
-            mainCharacter,
+            mainCharacter[direction],
             (player.position.x - spriteSize.width/2)|0,
             (player.position.y - spriteSize.height + playerAABB.height/2)|0,
             (spriteSize.width)|0,
@@ -30,7 +32,7 @@ export default class MainCharacterRenderer {
         );
     }
 
-    private drawShadow(player: MainCharacter, playerAABB: AABB) {
+    private drawShadow(player: MainCharacter, playerAABB: AABB): void {
         this.context.beginPath();
         this.context.ellipse(
             (player.position.x)|0,

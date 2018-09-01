@@ -15,6 +15,7 @@ export default class MainCharacter {
     private inputVelocity: Vector;
     private velocity: Vector;
     public position: Point;
+    public forward: Vector;
     private mask: Size;
 
     constructor(world: World) {
@@ -23,6 +24,7 @@ export default class MainCharacter {
         this.inputVelocity = new Vector(0, 0);
         this.velocity = new Vector(0, 0);
         this.position = new Point(worldSize.width/2, worldSize.height/2);
+        this.forward = new Vector(0, 1);
         this.mask = {
             width: 16,
             height: 16,
@@ -47,8 +49,12 @@ export default class MainCharacter {
             if (intersectAABB(this.getAABB({targetPosition: targetPositionY}), wall)) {
                 this.velocity.y = 0;
             }
-        })
+        });
 
+        const isCharacterStopped: boolean = (this.velocity.x === 0 && this.velocity.y === 0);
+        if (!isCharacterStopped) {
+            this.forward = this.velocity.normalized();
+        }
         this.position = this.position.addVector(this.velocity);
     }
 
