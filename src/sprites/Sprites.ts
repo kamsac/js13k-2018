@@ -1,10 +1,8 @@
 const mainCharacterDownSprite = require('./MainCharacter-down.png');
 
 function createSprite(sprite: string): HTMLImageElement {
-    const image = new Image(16, 16);
+    const image = new Image();
     image.src = sprite;
-    image.style.width = '32px';
-    image.style.height = '32px';
     return image;
 }
 
