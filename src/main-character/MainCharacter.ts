@@ -14,7 +14,7 @@ export default class MainCharacter {
     private inputManager: PlayerCharacterInputManager;
     private inputVelocity: Vector;
     private velocity: Vector;
-    private position: Point;
+    public position: Point;
     private mask: Size;
 
     constructor(world: World) {
@@ -24,8 +24,8 @@ export default class MainCharacter {
         this.velocity = new Vector(0, 0);
         this.position = new Point(worldSize.width/2, worldSize.height/2);
         this.mask = {
-            width: 40,
-            height: 40,
+            width: 16,
+            height: 16,
         };
     }
 
@@ -40,11 +40,11 @@ export default class MainCharacter {
         const targetPositionX: Point = new Point(targetPosition.x, this.position.y);
         const targetPositionY: Point = new Point(this.position.x, targetPosition.y);
         this.world.roomWalls.forEach((wall) => {
-            if (intersectAABB(this.getAABB(targetPositionX), wall)) {
+            if (intersectAABB(this.getAABB({targetPosition: targetPositionX}), wall)) {
                 this.velocity.x = 0;
             }
 
-            if (intersectAABB(this.getAABB(targetPositionY), wall)) {
+            if (intersectAABB(this.getAABB({targetPosition: targetPositionY}), wall)) {
                 this.velocity.y = 0;
             }
         })
@@ -76,8 +76,18 @@ export default class MainCharacter {
         console.log('attack');
     }
 
-    getAABB(targetPosition?: Point): AABB {
-        const position: Point = targetPosition ? targetPosition : this.position;
+    getAABB(AABBOptions: AABBOptions = {}): AABB {
+        const position: Point = AABBOptions.targetPosition ? AABBOptions.targetPosition : this.position;
+
+        if (AABBOptions.roundPositions) {
+            return {
+                x: Math.round(position.x - this.mask.width / 2),
+                y: Math.round(position.y - this.mask.height / 2),
+                width: this.mask.width,
+                height: this.mask.height,
+            }
+        }
+
         return {
             x: position.x - this.mask.width / 2,
             y: position.y - this.mask.height / 2,
@@ -85,4 +95,9 @@ export default class MainCharacter {
             height: this.mask.height,
         }
     }
+}
+
+interface AABBOptions {
+    targetPosition?: Point,
+    roundPositions?: boolean,
 }

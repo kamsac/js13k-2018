@@ -1,7 +1,7 @@
 import Size from '../../helpers/Size';
-import MainCharacter from '../main-character/MainCharacter';
 import World from '../world/World';
 import AABB from '../../helpers/AABB';
+import MainCharacterRenderer from './MainCharacterRenderer';
 
 export const canvasSize: Size = {
     width: 800,
@@ -12,22 +12,19 @@ export default class GameRenderer {
     public canvas!: HTMLCanvasElement;
     private context!: CanvasRenderingContext2D;
 
+    private mainCharacterRenderer: MainCharacterRenderer;
+
     public constructor() {
         this.createCanvas();
-        this.setResolution(canvasSize);
         this.attachCanvas();
+
+        this.mainCharacterRenderer = new MainCharacterRenderer(this.context);
     }
 
     public render(world: World): void {
         this.clearCanvas();
         this.renderWalls(world.roomWalls);
-        this.renderPlayer(world.player);
-    }
-
-    private renderPlayer(player: MainCharacter) {
-        const playerAABB: AABB = player.getAABB();
-        this.context.fillStyle = 'tomato';
-        this.context.fillRect(playerAABB.x, playerAABB.y, playerAABB.width, playerAABB.height);
+        this.mainCharacterRenderer.render(world.player);
     }
 
     private renderWalls(walls: AABB[]) {
@@ -44,14 +41,16 @@ export default class GameRenderer {
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    private setResolution(dimensions: Size) {
-        this.canvas.width = dimensions.width;
-        this.canvas.height = dimensions.height;
-    }
-
     private createCanvas(): void {
         this.canvas = document.createElement('canvas');
         this.context = this.canvas.getContext('2d')!;
+
+        this.canvas.width = canvasSize.width;
+        this.canvas.height = canvasSize.height;
+
+        this.context.imageSmoothingEnabled = false;
+        this.context.webkitImageSmoothingEnabled = false;
+        this.context.mozImageSmoothingEnabled = false;
     }
 
     private attachCanvas(): void {
