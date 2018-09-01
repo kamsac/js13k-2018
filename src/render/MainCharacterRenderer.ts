@@ -2,6 +2,7 @@ import MainCharacter from '../main-character/MainCharacter';
 import AABB from '../../helpers/AABB';
 import Size from '../../helpers/Size';
 import {mainCharacter} from '../sprites/Sprites';
+import Direction from '../../helpers/Direction';
 
 export default class MainCharacterRenderer {
     private context: CanvasRenderingContext2D;
@@ -21,7 +22,7 @@ export default class MainCharacterRenderer {
     }
 
     private drawCharacter(player: MainCharacter, spriteSize: Size, playerAABB: AABB): void {
-        const direction: string = player.forward.direction();
+        const direction: Direction = player.forward.direction();
 
         this.context.drawImage(
             mainCharacter[direction],

@@ -1,3 +1,5 @@
+import Direction from './Direction';
+
 export default class Vector {
     public x: number;
     public y: number;
@@ -45,10 +47,9 @@ export default class Vector {
         return angle < 0 ? 2 * Math.PI + angle : angle;
     }
 
-    public direction(): string {
-        const fraction = this.angle() / (2*Math.PI);
-        const index = Math.round(fraction*4) % 4;
-        console.log(fraction, index);
+    public direction(): Direction {
+        const fraction: number = this.angle() / (2*Math.PI);
+        const index: number = Math.round(fraction*4) % 4;
         return directions[index];
     }
 
@@ -57,4 +58,4 @@ export default class Vector {
     }
 }
 
-const directions: string[] = ['right', 'down', 'left', 'up'];
+const directions: Direction[] = ['right', 'down', 'left', 'up'];
