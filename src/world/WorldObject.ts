@@ -1,7 +1,7 @@
 import Point from '../../helpers/Point';
 import AABB from '../../helpers/AABB';
 import Size from '../../helpers/Size';
-import World from "./World";
+import World from './World';
 
 export default abstract class WorldObject {
     public world: World;

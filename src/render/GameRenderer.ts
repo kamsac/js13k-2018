@@ -3,6 +3,7 @@ import World from '../world/World';
 import AABB from '../../helpers/AABB';
 import MainCharacterRenderer from './MainCharacterRenderer';
 import FlyswatRenderer from './FlyswatRenderer';
+import InsectsRenderer from './InsectsRenderer';
 
 export const canvasSize: Size = {
     width: 800,
@@ -15,19 +16,22 @@ export default class GameRenderer {
 
     private mainCharacterRenderer: MainCharacterRenderer;
     private flyswatRenderer: FlyswatRenderer;
+    private insectsRenderer: InsectsRenderer;
 
     public constructor() {
-
         this.createCanvas();
         this.attachCanvas();
 
         this.mainCharacterRenderer = new MainCharacterRenderer(this.context);
         this.flyswatRenderer = new FlyswatRenderer(this.context);
+        this.insectsRenderer = new InsectsRenderer(this.context);
     }
 
     public render(world: World): void {
         this.clearCanvas();
+
         this.renderWalls(world.roomWalls);
+        this.insectsRenderer.render(world);
         this.flyswatRenderer.render(world);
         this.mainCharacterRenderer.render(world.player);
     }

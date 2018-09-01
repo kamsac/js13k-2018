@@ -42,6 +42,16 @@ export default class Vector {
         );
     }
 
+    public rotate(radians: number): Vector {
+        const cos = Math.cos(radians);
+        const sin = Math.sin(radians);
+
+        return new Vector(
+            this.x * cos - this.y * sin,
+            this.x * sin + this.y * cos,
+        );
+    }
+
     public angle(): number {
         const angle: number = Math.atan2(this.y, this.x);
         return angle < 0 ? 2 * Math.PI + angle : angle;
