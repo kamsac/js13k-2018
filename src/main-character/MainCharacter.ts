@@ -5,14 +5,13 @@ import World, {worldSize} from '../world/World';
 import intersectAABB from '../../helpers/intersectAABB';
 import WorldObject from '../world/WorldObject';
 
-const MOVEMENT_ACCELERATION: number = 0.4;
-const MOVEMENT_DUMP: number = 0.9;
-
 export default class MainCharacter extends WorldObject {
     private inputManager: PlayerCharacterInputManager;
     private inputVelocity: Vector;
     private velocity: Vector;
     public position: Point;
+    public positionZ: number;
+    public velocityZ: number;
     public forward: Vector;
 
     constructor(world: World) {
@@ -30,6 +29,8 @@ export default class MainCharacter extends WorldObject {
         this.velocity = new Vector(0, 0);
         this.position = new Point(worldSize.width/2, worldSize.height/2);
         this.forward = new Vector(0, 1);
+        this.positionZ = 0;
+        this.velocityZ = 0;
     }
 
     public update(): void {
@@ -37,7 +38,10 @@ export default class MainCharacter extends WorldObject {
         this.inputManager.update(this);
 
         this.velocity = this.velocity.add(this.inputVelocity);
-        this.velocity = this.velocity.multiply(MOVEMENT_DUMP);
+        if (!this.isJumping()) {
+            this.velocity = this.velocity.multiply(MOVEMENT_DUMP);
+        }
+        this.velocityZ -= gravity;
 
         const targetPosition: Point = this.position.addVector(this.velocity);
         const targetPositionX: Point = new Point(targetPosition.x, this.position.y);
@@ -57,6 +61,13 @@ export default class MainCharacter extends WorldObject {
             this.forward = this.velocity.normalized();
         }
         this.position = this.position.addVector(this.velocity);
+
+        if (this.positionZ < 0) {
+            this.positionZ = 0;
+            this.velocityZ = 0;
+        }
+
+        this.positionZ += this.velocityZ;
     }
 
     public moveUp(): void {
@@ -76,10 +87,22 @@ export default class MainCharacter extends WorldObject {
     }
 
     public jump(): void {
-        console.log('jump');
+        if (!this.isJumping()) {
+            this.velocityZ = jumpForce;
+        }
+    }
+
+    public isJumping(): boolean {
+        return this.positionZ > 0;
     }
 
     public attack(): void {
         this.world.flyswat.hit();
     }
 }
+
+const MOVEMENT_ACCELERATION: number = 0.4;
+const MOVEMENT_DUMP: number = 0.9;
+
+const gravity: number = 0.1;
+const jumpForce: number = 2;

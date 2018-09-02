@@ -6,6 +6,10 @@ export default class PlayerCharacterInputManager {
     private gameInput: GameInput = Locator.getGameInput();
 
     public update(character: MainCharacter): void {
+        if (character.isJumping()) {
+            return;
+        }
+
         if (this.gameInput.bindings.moveUp.pressed) {
             character.moveUp();
         }
