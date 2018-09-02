@@ -24,8 +24,8 @@ export default class World {
         this.roomWalls = this.getRoomWalls();
         this.insects = [];
 
-        for (let i = 0; i < 5; i++) {
-            this.insects.push(new Insect(this));
+        for (let i = 0; i < 1; i++) {
+            this.spawnInsect();
         }
     }
 
@@ -36,6 +36,10 @@ export default class World {
         });
         this.player.update();
         this.flyswat.update();
+    }
+
+    public spawnInsect() {
+        this.insects.push(new Insect(this));
     }
 
     private getWallkingArea(): AABB {

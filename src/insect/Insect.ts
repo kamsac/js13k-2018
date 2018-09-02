@@ -36,37 +36,49 @@ export default class Insect extends WorldObject {
     }
 
     public update(): void {
-        this.ticksSinceMoveChange++;
-        if (this.ticksSinceMoveChange > this.ticksToMoveChange) {
-            this.ticksSinceMoveChange = 0;
-            this.wantsToMove = !this.wantsToMove;
-            this.ticksToMoveChange = this.getRandomTicksToMoveChange();
-            this.forward = this.getRandomDirection().normalized();
-        }
+        if (this.isAlive) {
+            this.ticksSinceMoveChange++;
+            if (this.ticksSinceMoveChange > this.ticksToMoveChange) {
+                this.ticksSinceMoveChange = 0;
+                this.wantsToMove = !this.wantsToMove;
+                this.ticksToMoveChange = this.getRandomTicksToMoveChange();
+                this.forward = this.getRandomDirection().normalized();
+            }
 
-        if (this.wantsToMove) {
-            this.velocity = this.forward.multiply(1);
+            if (this.wantsToMove) {
+                this.velocity = this.forward.multiply(1);
 
-            const targetPosition: Point = this.position.addVector(this.velocity);
-            const targetPositionX: Point = new Point(targetPosition.x, this.position.y);
-            const targetPositionY: Point = new Point(this.position.x, targetPosition.y);
-            this.world.roomWalls.forEach((wall) => {
-                if (intersectAABB(this.getAABB({targetPosition: targetPositionX}), wall)) {
-                    this.velocity.x = 0;
-                }
-                if (intersectAABB(this.getAABB({targetPosition: targetPositionY}), wall)) {
-                    this.velocity.y = 0;
-                }
-            });
-            this.position = this.position.addVector(this.velocity);
+                const targetPosition: Point = this.position.addVector(this.velocity);
+                const targetPositionX: Point = new Point(targetPosition.x, this.position.y);
+                const targetPositionY: Point = new Point(this.position.x, targetPosition.y);
+                this.world.roomWalls.forEach((wall) => {
+                    if (intersectAABB(this.getAABB({targetPosition: targetPositionX}), wall)) {
+                        this.velocity.x = 0;
+                    }
+                    if (intersectAABB(this.getAABB({targetPosition: targetPositionY}), wall)) {
+                        this.velocity.y = 0;
+                    }
+                });
+                this.position = this.position.addVector(this.velocity);
+            }
         }
     }
 
-    public getRandomDirection(): Vector {
+    public kill(): void {
+        if (this.isAlive) {
+            console.log('KILLED');
+            this.isAlive = false;
+            this.velocity = this.velocity.multiply(0);
+
+            this.world.spawnInsect();
+        }
+    }
+
+    private getRandomDirection(): Vector {
         return this.forward.rotate(Math.random()*Math.PI*2);
     }
 
-    public getRandomTicksToMoveChange(): number {
+    private getRandomTicksToMoveChange(): number {
         return Math.random()*120;
     }
 }

@@ -1,6 +1,7 @@
 import Point from '../../helpers/Point';
 import WorldObject from '../world/WorldObject';
 import World from '../world/World';
+import intersectAABB from '../../helpers/intersectAABB';
 
 export default class Flyswat extends WorldObject {
     public isHitting: boolean;
@@ -29,10 +30,14 @@ export default class Flyswat extends WorldObject {
         }
     }
 
-    public hit(position: Point): void {
+    public hit(): void {
         if (this.world.tick - this.lastHit > this.hitCooldown) {
-            this.position = position;
             this.isHitting = true;
+            this.world.insects.forEach((insect) => {
+                if (intersectAABB(insect.getAABB(), this.getAABB())) {
+                    insect.kill();
+                }
+            });
             this.lastHit = this.world.tick;
         }
     }

@@ -80,8 +80,6 @@ export default class MainCharacter extends WorldObject {
     }
 
     public attack(): void {
-        console.log('attack');
-        const flyswatPosition: Point = this.position.addVector(this.forward.multiply(100));
-        this.world.flyswat.hit(flyswatPosition);
+        this.world.flyswat.hit();
     }
 }

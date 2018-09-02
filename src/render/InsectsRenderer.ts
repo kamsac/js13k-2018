@@ -8,9 +8,9 @@ export default class InsectsRenderer {
     }
 
     public render(world: World): void {
-        this.context.fillStyle = 'tomato';
         world.insects.forEach((insect) => {
             const aabb: AABB = insect.getAABB();
+            this.context.fillStyle = insect.isAlive ? 'tomato' : 'gray';
             this.context.fillRect(aabb.x, aabb.y, aabb.width, aabb.height);
         });
     }
