@@ -4,6 +4,7 @@ import Vector from '../../helpers/Vector';
 import World, {worldSize} from '../world/World';
 import intersectAABB from '../../helpers/intersectAABB';
 import WorldObject from '../world/WorldObject';
+import Cable from '../cable/Cable';
 
 export default class MainCharacter extends WorldObject {
     private inputManager: PlayerCharacterInputManager;
@@ -25,7 +26,7 @@ export default class MainCharacter extends WorldObject {
         });
 
         this.inputManager = new PlayerCharacterInputManager();
-        this.inputVelocity = new Vector(0, 0);
+        this.inputVelocity = new Vector(0, 0) ;
         this.velocity = new Vector(0, 0);
         this.position = new Point(worldSize.width/2, worldSize.height/2);
         this.forward = new Vector(0, 1);
@@ -68,6 +69,14 @@ export default class MainCharacter extends WorldObject {
         }
 
         this.positionZ += this.velocityZ;
+
+        if (!this.isJumping()) {
+            this.world.cables.forEach((cable) => {
+                if (intersectAABB(this.getAABB(), cable.getAABB())) {
+                    this.fallOverCable(cable);
+                }
+            });
+        }
     }
 
     public moveUp(): void {
@@ -98,6 +107,10 @@ export default class MainCharacter extends WorldObject {
 
     public attack(): void {
         this.world.flyswat.hit();
+    }
+
+    public fallOverCable(cable: Cable): void {
+        cable.health = 0;
     }
 }
 

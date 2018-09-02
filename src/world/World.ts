@@ -4,6 +4,8 @@ import MainCharacter from '../main-character/MainCharacter';
 import AABB from '../../helpers/AABB';
 import Flyswat from '../flyswat/Flyswat';
 import Insect from '../insect/Insect';
+import Cable from '../cable/Cable';
+import Point from '../../helpers/Point';
 
 export const worldSize: Size = canvasSize;
 
@@ -14,6 +16,7 @@ export default class World {
     public flyswat: Flyswat;
     public walkingArea: AABB;
     public insects: Insect[];
+    public cables: Cable[];
 
     public constructor() {
         this.tick = 0;
@@ -23,10 +26,13 @@ export default class World {
         this.walkingArea = this.getWallkingArea();
         this.roomWalls = this.getRoomWalls();
         this.insects = [];
+        this.cables = [];
 
         for (let i = 0; i < 1; i++) {
             this.spawnInsect();
         }
+
+        this.spawnCables();
     }
 
     public update(): void {
@@ -38,8 +44,111 @@ export default class World {
         this.flyswat.update();
     }
 
-    public spawnInsect() {
+    public spawnInsect(): void {
         this.insects.push(new Insect(this));
+    }
+
+    private spawnCables(): void {
+        const walkingArea: AABB = this.getWallkingArea();
+        function getWalkingAreaPoint(point: Point): Point {
+            return new Point(
+                point.x + walkingArea.x + 20,
+                point.y + walkingArea.y,
+            );
+        }
+
+        this.cables.push(
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(50, 200)),
+                angle: 'horizontal',
+                length: 110,
+            }),
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(150, 200)),
+                angle: 'horizontal',
+                length: 110,
+            }),
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(200, 150)),
+                angle: 'vertical',
+                length: 110,
+            }),
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(250, 100)),
+                angle: 'horizontal',
+                length: 110,
+            }),
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(350, 100)),
+                angle: 'horizontal',
+                length: 110,
+            }),
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(450, 100)),
+                angle: 'horizontal',
+                length: 110,
+            }),
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(550, 100)),
+                angle: 'horizontal',
+                length: 110,
+            }),
+        );
+
+        this.cables.push(
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(350, 300)),
+                angle: 'vertical',
+                length: 110,
+            }),
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(400, 250)),
+                angle: 'horizontal',
+                length: 110,
+            }),
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(450, 200)),
+                angle: 'vertical',
+                length: 110,
+            }),
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(450, 100)),
+                angle: 'vertical',
+                length: 110,
+            }),
+        );
+
+        this.cables.push(
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(100, 100)),
+                angle: 'vertical',
+                length: 110,
+            }),
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(100, 200)),
+                angle: 'vertical',
+                length: 110,
+            }),
+            new Cable({
+                world: this,
+                position: getWalkingAreaPoint(new Point(100, 300)),
+                angle: 'vertical',
+                length: 110,
+            }),
+        );
     }
 
     private getWallkingArea(): AABB {

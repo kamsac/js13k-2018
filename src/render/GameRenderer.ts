@@ -4,6 +4,7 @@ import AABB from '../../helpers/AABB';
 import MainCharacterRenderer from './MainCharacterRenderer';
 import FlyswatRenderer from './FlyswatRenderer';
 import InsectsRenderer from './InsectsRenderer';
+import CablesRenderer from './CablesRenderer';
 
 export const canvasSize: Size = {
     width: 800,
@@ -17,6 +18,7 @@ export default class GameRenderer {
     private mainCharacterRenderer: MainCharacterRenderer;
     private flyswatRenderer: FlyswatRenderer;
     private insectsRenderer: InsectsRenderer;
+    private cablesRenderer: CablesRenderer;
 
     public constructor() {
         this.createCanvas();
@@ -25,12 +27,14 @@ export default class GameRenderer {
         this.mainCharacterRenderer = new MainCharacterRenderer(this.context);
         this.flyswatRenderer = new FlyswatRenderer(this.context);
         this.insectsRenderer = new InsectsRenderer(this.context);
+        this.cablesRenderer = new CablesRenderer(this.context);
     }
 
     public render(world: World): void {
         this.clearCanvas();
 
         this.renderWalls(world.roomWalls);
+        this.cablesRenderer.render(world);
         this.insectsRenderer.render(world);
         this.flyswatRenderer.render(world);
         this.mainCharacterRenderer.render(world.player);

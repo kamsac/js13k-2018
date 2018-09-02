@@ -66,7 +66,6 @@ export default class Insect extends WorldObject {
 
     public kill(): void {
         if (this.isAlive) {
-            console.log('KILLED');
             this.isAlive = false;
             this.velocity = this.velocity.multiply(0);
 
