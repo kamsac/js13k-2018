@@ -6,6 +6,7 @@ import Flyswat from '../flyswat/Flyswat';
 import Insect from '../insect/Insect';
 import Cable from '../cable/Cable';
 import Point from '../../helpers/Point';
+import CableBuilder from '../cable/CableBuilder';
 
 export const worldSize: Size = canvasSize;
 
@@ -28,7 +29,7 @@ export default class World {
         this.insects = [];
         this.cables = [];
 
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < 4; i++) {
             this.spawnInsect();
         }
 
@@ -49,106 +50,86 @@ export default class World {
     }
 
     private spawnCables(): void {
-        const walkingArea: AABB = this.getWallkingArea();
-        function getWalkingAreaPoint(point: Point): Point {
-            return new Point(
-                point.x + walkingArea.x + 20,
-                point.y + walkingArea.y,
-            );
-        }
+        const cableBuilder: CableBuilder = new CableBuilder(this);
+        const cable1: Cable[] = cableBuilder.createCables([
+            new Point(0, 200),
+            new Point(50, 200),
+            new Point(100, 200),
+            new Point(100, 150),
+            new Point(150, 150),
+            new Point(150, 100),
+            new Point(200, 100),
+            new Point(250, 100),
+            new Point(300, 100),
+            new Point(300, 50),
+            new Point(300, 0),
+        ]);
 
-        this.cables.push(
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(50, 200)),
-                angle: 'horizontal',
-                length: 110,
-            }),
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(150, 200)),
-                angle: 'horizontal',
-                length: 110,
-            }),
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(200, 150)),
-                angle: 'vertical',
-                length: 110,
-            }),
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(250, 100)),
-                angle: 'horizontal',
-                length: 110,
-            }),
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(350, 100)),
-                angle: 'horizontal',
-                length: 110,
-            }),
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(450, 100)),
-                angle: 'horizontal',
-                length: 110,
-            }),
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(550, 100)),
-                angle: 'horizontal',
-                length: 110,
-            }),
-        );
+        const cable2: Cable[] = cableBuilder.createCables([
+            new Point(200, 0),
+            new Point(200, 50),
+            new Point(200, 100),
+            new Point(200, 150),
+            new Point(200, 200),
+            new Point(250, 200),
+            new Point(250, 250),
+            new Point(250, 300),
+            new Point(250, 350),
+            new Point(300, 350),
+            new Point(300, 400),
+        ]);
 
-        this.cables.push(
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(350, 300)),
-                angle: 'vertical',
-                length: 110,
-            }),
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(400, 250)),
-                angle: 'horizontal',
-                length: 110,
-            }),
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(450, 200)),
-                angle: 'vertical',
-                length: 110,
-            }),
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(450, 100)),
-                angle: 'vertical',
-                length: 110,
-            }),
-        );
+        const cable3: Cable[] = cableBuilder.createCables([
+            new Point(200, 400),
+            new Point(200, 350),
+            new Point(200, 300),
+            new Point(250, 300),
+            new Point(300, 300),
+            new Point(350, 300),
+            new Point(400, 300),
+            new Point(400, 250),
+            new Point(450, 250),
+            new Point(450, 200),
+            new Point(450, 150),
+            new Point(500, 150),
+            new Point(550, 150),
+            new Point(600, 150),
+            new Point(660, 150),
+        ]);
 
-        this.cables.push(
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(100, 100)),
-                angle: 'vertical',
-                length: 110,
-            }),
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(100, 200)),
-                angle: 'vertical',
-                length: 110,
-            }),
-            new Cable({
-                world: this,
-                position: getWalkingAreaPoint(new Point(100, 300)),
-                angle: 'vertical',
-                length: 110,
-            }),
-        );
+        const cable4: Cable[] = cableBuilder.createCables([
+            new Point(600, 400),
+            new Point(600, 350),
+            new Point(550, 350),
+            new Point(500, 350),
+            new Point(450, 350),
+            new Point(400, 350),
+            new Point(350, 350),
+            new Point(350, 300),
+            new Point(350, 250),
+            new Point(300, 250),
+            new Point(250, 250),
+            new Point(200, 250),
+            new Point(150, 250),
+            new Point(100, 250),
+            new Point(100, 300),
+            new Point(50, 300),
+            new Point(0, 300),
+        ]);
+
+        const cable5: Cable[] = cableBuilder.createCables([
+            new Point(500, 0),
+            new Point(500, 50),
+            new Point(500, 100),
+            new Point(500, 150),
+            new Point(500, 200),
+            new Point(500, 250),
+            new Point(550, 250),
+            new Point(600, 250),
+            new Point(660, 250),
+        ]);
+
+        this.cables.push(...cable1, ...cable2, ...cable3, ...cable4, ...cable5);
     }
 
     private getWallkingArea(): AABB {
@@ -190,7 +171,7 @@ export default class World {
     }
 }
 
-const wallDepth: number = 20;
+const wallDepth: number = 10;
 const topMargin: number = 120;
 const leftMargin: number = 60;
 const rightMargin: number = 60;
