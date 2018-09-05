@@ -54,7 +54,7 @@ export default class GameRenderer {
     private clearCanvas(): void {
         this.context.setTransform(1,0,0,1,0,0);
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.context.fillStyle = '#344';
+        this.context.fillStyle = '#466';
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 

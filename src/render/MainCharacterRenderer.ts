@@ -1,7 +1,7 @@
 import MainCharacter from '../main-character/MainCharacter';
 import AABB from '../../helpers/AABB';
 import Size from '../../helpers/Size';
-import {mainCharacter} from '../sprites/Sprites';
+import Sprites from '../sprites/Sprites';
 import Direction from '../../helpers/Direction';
 
 export default class MainCharacterRenderer {
@@ -25,7 +25,7 @@ export default class MainCharacterRenderer {
         const direction: Direction = player.forward.direction();
 
         this.context.drawImage(
-            mainCharacter[direction],
+            Sprites.mainCharacter[direction],
             (player.position.x - spriteSize.width/2)|0,
             (player.position.y - spriteSize.height + playerAABB.height/2 - player.positionZ)|0,
             (spriteSize.width)|0,

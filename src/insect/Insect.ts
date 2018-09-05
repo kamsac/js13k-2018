@@ -12,11 +12,12 @@ export default class Insect extends WorldObject {
     private ticksSinceMoveChange: number;
     private ticksToMoveChange: number;
     private wantsToMove: boolean;
+    public animationFrame: number;
 
     constructor(world: World) {
         const collisionMask: Size = {
-            width: 10,
-            height: 10,
+            width: 12,
+            height: 12,
         };
         super({
             world,
@@ -33,6 +34,7 @@ export default class Insect extends WorldObject {
         this.ticksSinceMoveChange = 0;
         this.wantsToMove = false;
         this.ticksToMoveChange = this.getRandomTicksToMoveChange();
+        this.animationFrame = 0;
     }
 
     public update(): void {
@@ -60,6 +62,10 @@ export default class Insect extends WorldObject {
                     }
                 });
                 this.position = this.position.addVector(this.velocity);
+
+                if (this.world.tick % 5 === 0) {
+                    this.animationFrame = (this.animationFrame + 1) % animationFrames;
+                }
             }
         }
     }
@@ -83,3 +89,5 @@ export default class Insect extends WorldObject {
         return Math.random()*120;
     }
 }
+
+const animationFrames: number = 2;
