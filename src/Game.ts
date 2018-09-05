@@ -25,7 +25,7 @@ export default class Game {
         this.gameRenderer = new GameRenderer();
         this.gameInput = new KeyboardAndMouseGameInput(this.gameRenderer.canvas);
         Locator.provideGameInput(this.gameInput);
-        this.world = new World();
+        this.world = new World(this);
         this.initFpsStats();
         this.requestNextFrame();
     }

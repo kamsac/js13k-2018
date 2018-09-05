@@ -7,10 +7,12 @@ import Insect from '../insect/Insect';
 import Cable from '../cable/Cable';
 import Point from '../../helpers/Point';
 import CableBuilder from '../cable/CableBuilder';
+import Game from '../Game';
 
 export const worldSize: Size = canvasSize;
 
 export default class World {
+    private game: Game;
     public tick: number;
     public player: MainCharacter;
     public roomWalls: AABB[];
@@ -18,8 +20,10 @@ export default class World {
     public walkingArea: AABB;
     public insects: Insect[];
     public cables: Cable[];
+    public score: number;
 
-    public constructor() {
+    public constructor(game: Game) {
+        this.game = game;
         this.tick = 0;
         this.player = new MainCharacter(this);
         this.flyswat = new Flyswat(this);
@@ -28,6 +32,7 @@ export default class World {
         this.roomWalls = this.getRoomWalls();
         this.insects = [];
         this.cables = [];
+        this.score = 0;
 
         for (let i = 0; i < 4; i++) {
             this.spawnInsect();

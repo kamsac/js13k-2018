@@ -5,6 +5,7 @@ import MainCharacterRenderer from './MainCharacterRenderer';
 import FlyswatRenderer from './FlyswatRenderer';
 import InsectsRenderer from './InsectsRenderer';
 import CablesRenderer from './CablesRenderer';
+import ScoreRenderer from './ScoreRenderer';
 
 export const canvasSize: Size = {
     width: 800,
@@ -19,6 +20,7 @@ export default class GameRenderer {
     private flyswatRenderer: FlyswatRenderer;
     private insectsRenderer: InsectsRenderer;
     private cablesRenderer: CablesRenderer;
+    private scoreRenderer: ScoreRenderer;
 
     public constructor() {
         this.createCanvas();
@@ -28,6 +30,7 @@ export default class GameRenderer {
         this.flyswatRenderer = new FlyswatRenderer(this.context);
         this.insectsRenderer = new InsectsRenderer(this.context);
         this.cablesRenderer = new CablesRenderer(this.context);
+        this.scoreRenderer = new ScoreRenderer(this.context);
     }
 
     public render(world: World): void {
@@ -38,6 +41,7 @@ export default class GameRenderer {
         this.insectsRenderer.render(world);
         this.flyswatRenderer.render(world);
         this.mainCharacterRenderer.render(world.player);
+        this.scoreRenderer.render(world);
     }
 
     private renderWalls(walls: AABB[]) {
