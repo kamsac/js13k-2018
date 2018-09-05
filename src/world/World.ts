@@ -177,7 +177,7 @@ export default class World {
 }
 
 const wallDepth: number = 10;
-const topMargin: number = 120;
+const topMargin: number = 160;
 const leftMargin: number = 60;
 const rightMargin: number = 60;
-const bottomMargin: number = 60;
+const bottomMargin: number = 20;

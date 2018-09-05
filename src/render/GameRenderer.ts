@@ -40,8 +40,8 @@ export default class GameRenderer {
         this.cablesRenderer.render(world);
         this.insectsRenderer.render(world);
         this.flyswatRenderer.render(world);
-        this.mainCharacterRenderer.render(world.player);
         this.scoreRenderer.render(world);
+        this.mainCharacterRenderer.render(world.player);
     }
 
     private renderWalls(walls: AABB[]) {
