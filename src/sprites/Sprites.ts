@@ -2,10 +2,12 @@ const mainCharacterUpSprite = require('./MainCharacter-up.png');
 const mainCharacterDownSprite = require('./MainCharacter-down.png');
 const mainCharacterLeftSprite = require('./MainCharacter-left.png');
 const mainCharacterRightSprite = require('./MainCharacter-right.png');
+
 const insectWalking1 = require('./Insect-walking-1.png');
 const insectWalking2 = require('./Insect-walking-2.png');
 const insectDead = require('./Insect-dead.png');
 
+const flyswat = require('./Flyswat.png');
 
 function createSprite(sprite: string): HTMLImageElement {
     const image = new Image();
@@ -31,6 +33,7 @@ const insect = {
 const Sprites = {
     mainCharacter,
     insect,
+    flyswat: createSprite(flyswat),
 };
 
 export default Sprites;

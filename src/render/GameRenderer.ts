@@ -2,7 +2,7 @@ import Size from '../../helpers/Size';
 import World from '../world/World';
 import AABB from '../../helpers/AABB';
 import MainCharacterRenderer from './MainCharacterRenderer';
-import FlyswatRenderer from './FlyswatRenderer';
+import FlyswatRenderer, {isFlyswatBehindPlayer} from './FlyswatRenderer';
 import InsectsRenderer from './InsectsRenderer';
 import CablesRenderer from './CablesRenderer';
 import ScoreRenderer from './ScoreRenderer';
@@ -39,9 +39,15 @@ export default class GameRenderer {
         this.renderWalls(world.roomWalls);
         this.cablesRenderer.render(world);
         this.insectsRenderer.render(world);
-        this.flyswatRenderer.render(world);
         this.scoreRenderer.render(world);
-        this.mainCharacterRenderer.render(world.player);
+
+        if (isFlyswatBehindPlayer(world.player)) {
+            this.flyswatRenderer.render(world);
+            this.mainCharacterRenderer.render(world.player);
+        } else {
+            this.mainCharacterRenderer.render(world.player);
+            this.flyswatRenderer.render(world);
+        }
     }
 
     private renderWalls(walls: AABB[]) {

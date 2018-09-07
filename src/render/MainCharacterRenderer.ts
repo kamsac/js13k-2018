@@ -12,13 +12,9 @@ export default class MainCharacterRenderer {
 
     public render(player: MainCharacter): void {
         const playerAABB: AABB = player.getAABB({roundPositions: true});
-        const spriteSize: Size = {
-            width: 64,
-            height: 64,
-        };
 
         this.drawShadow(player, playerAABB);
-        this.drawCharacter(player, spriteSize, playerAABB);
+        this.drawCharacter(player, playerSpriteSize, playerAABB);
     }
 
     private drawCharacter(player: MainCharacter, spriteSize: Size, playerAABB: AABB): void {
@@ -48,3 +44,8 @@ export default class MainCharacterRenderer {
         this.context.fill();
     }
 }
+
+export const playerSpriteSize: Size = {
+    width: 64,
+    height: 64,
+};

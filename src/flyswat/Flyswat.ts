@@ -25,7 +25,7 @@ export default class Flyswat extends WorldObject {
     public update(): void {
         this.position = this.world.player.position.addVector(this.world.player.forward.multiply(this.world.player.collisionMask.width*3));
 
-        if (this.world.tick - this.lastHit > 2) {
+        if (this.world.tick - this.lastHit > 10) {
             this.isHitting = false;
         }
     }
