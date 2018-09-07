@@ -92,7 +92,8 @@ export default class Insect extends WorldObject {
             this.isAlive = false;
             this.velocity = this.velocity.multiply(0);
 
-            this.world.score += 10;
+            this.world.flyswat.increaseHitStreak();
+            this.world.flyswat.addKillScore();
 
             this.world.spawnInsect();
         }

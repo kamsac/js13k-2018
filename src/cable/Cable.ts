@@ -20,7 +20,7 @@ export default class Cable extends WorldObject {
         this.health = this.maxHealth;
     }
 
-    public getBitten() {
+    public getBitten(): void {
         this.health -= 10;
         if (this.health < 0) {
             this.health = 0;

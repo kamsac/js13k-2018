@@ -7,6 +7,7 @@ export default class Flyswat extends WorldObject {
     public isHitting: boolean;
     private lastHit: number;
     private hitCooldown: number;
+    public hitStreak: number;
 
     constructor(world: World) {
         super({
@@ -20,6 +21,7 @@ export default class Flyswat extends WorldObject {
         this.hitCooldown = 60;
         this.lastHit = 0;
         this.isHitting = false;
+        this.hitStreak = 0;
     }
 
     public update(): void {
@@ -32,13 +34,34 @@ export default class Flyswat extends WorldObject {
 
     public hit(): void {
         if (this.world.tick - this.lastHit > this.hitCooldown) {
+            let killedAnything = false;
             this.isHitting = true;
             this.world.insects.forEach((insect) => {
                 if (intersectAABB(insect.getAABB(), this.getAABB())) {
                     insect.kill();
+                    killedAnything = true;
                 }
             });
             this.lastHit = this.world.tick;
+
+            if (!killedAnything) {
+                this.resetHitStreak();
+            }
         }
     }
+
+    public increaseHitStreak(): void {
+        this.hitStreak += 1;
+    }
+
+    public resetHitStreak(): void {
+        this.hitStreak = 0;
+    }
+
+    public addKillScore() {
+        this.world.score += hitScoreBase + hitStreakBonus * (this.hitStreak-1);
+    }
 }
+
+const hitScoreBase: number = 10;
+const hitStreakBonus: number = 5;
