@@ -10,7 +10,10 @@ export default class CablesRenderer {
     public render(world: World): void {
         world.cables.forEach((cable) => {
             const aabb: AABB = cable.getAABB();
-            this.context.fillStyle = cable.health ? 'black' : 'red';
+            const destroyed: number = 1 - (cable.health / cable.maxHealth);
+            const percent: number = destroyed * 50;
+
+            this.context.fillStyle = `hsl(0, 100%, ${percent}%)`;
             this.context.fillRect(aabb.x, aabb.y, aabb.width, aabb.height);
         });
     }

@@ -4,6 +4,7 @@ import World from '../world/World';
 import Vector from '../../helpers/Vector';
 import Size from '../../helpers/Size';
 import intersectAABB from '../../helpers/intersectAABB';
+import Cable from '../cable/Cable';
 
 export default class Insect extends WorldObject {
     public isAlive: boolean;
@@ -13,6 +14,8 @@ export default class Insect extends WorldObject {
     private ticksToMoveChange: number;
     private wantsToMove: boolean;
     public animationFrame: number;
+    public isBiting: boolean;
+    public lastBite: number;
 
     constructor(world: World) {
         const collisionMask: Size = {
@@ -35,38 +38,52 @@ export default class Insect extends WorldObject {
         this.wantsToMove = false;
         this.ticksToMoveChange = this.getRandomTicksToMoveChange();
         this.animationFrame = 0;
+        this.isBiting = false;
+        this.lastBite = 0;
     }
 
     public update(): void {
-        if (this.isAlive) {
-            this.ticksSinceMoveChange++;
-            if (this.ticksSinceMoveChange > this.ticksToMoveChange) {
-                this.ticksSinceMoveChange = 0;
-                this.wantsToMove = !this.wantsToMove;
-                this.ticksToMoveChange = this.getRandomTicksToMoveChange();
-                this.forward = this.getRandomDirection().normalized();
-            }
+        if (!this.isAlive) {
+            return;
+        }
 
-            if (this.wantsToMove) {
-                this.velocity = this.forward.multiply(1);
+        this.ticksSinceMoveChange++;
+        if (this.ticksSinceMoveChange > this.ticksToMoveChange) {
+            this.ticksSinceMoveChange = 0;
+            this.wantsToMove = !this.wantsToMove;
+            this.ticksToMoveChange = this.getRandomTicksToMoveChange();
+            this.forward = this.getRandomDirection().normalized();
+        }
 
-                const targetPosition: Point = this.position.addVector(this.velocity);
-                const targetPositionX: Point = new Point(targetPosition.x, this.position.y);
-                const targetPositionY: Point = new Point(this.position.x, targetPosition.y);
-                this.world.roomWalls.forEach((wall) => {
-                    if (intersectAABB(this.getAABB({targetPosition: targetPositionX}), wall)) {
-                        this.velocity.x = 0;
-                    }
-                    if (intersectAABB(this.getAABB({targetPosition: targetPositionY}), wall)) {
-                        this.velocity.y = 0;
-                    }
-                });
-                this.position = this.position.addVector(this.velocity);
+        this.velocity = this.forward.multiply(1);
+        const targetPosition: Point = this.position.addVector(this.velocity);
+        const targetPositionX: Point = new Point(targetPosition.x, this.position.y);
+        const targetPositionY: Point = new Point(this.position.x, targetPosition.y);
 
-                if (this.world.tick % 5 === 0) {
-                    this.animationFrame = (this.animationFrame + 1) % animationFrames;
+        if (this.wantsToMove) {
+            this.world.roomWalls.forEach((wall) => {
+                if (intersectAABB(this.getAABB({targetPosition: targetPositionX}), wall)) {
+                    this.velocity.x = 0;
                 }
+                if (intersectAABB(this.getAABB({targetPosition: targetPositionY}), wall)) {
+                    this.velocity.y = 0;
+                }
+            });
+            this.position = this.position.addVector(this.velocity);
+
+            if (this.world.tick % 5 === 0) {
+                this.animationFrame = (this.animationFrame + 1) % animationFrames;
             }
+        }
+
+        this.world.cables.forEach((cable) => {
+            if (!this.isBiting && intersectAABB(this.getAABB({targetPosition}), cable.getAABB())) {
+                this.biteCable(cable);
+            }
+        });
+
+        if (this.world.tick - this.lastBite > biteCooldown) {
+            this.isBiting = false;
         }
     }
 
@@ -81,6 +98,12 @@ export default class Insect extends WorldObject {
         }
     }
 
+    private biteCable(cable: Cable): void {
+        cable.getBitten();
+        this.isBiting = true;
+        this.lastBite = this.world.tick;
+    }
+
     private getRandomDirection(): Vector {
         return this.forward.rotate(Math.random()*Math.PI*2);
     }
@@ -91,3 +114,4 @@ export default class Insect extends WorldObject {
 }
 
 const animationFrames: number = 2;
+const biteCooldown: number = 120;

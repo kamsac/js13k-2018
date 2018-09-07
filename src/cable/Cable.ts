@@ -4,6 +4,7 @@ import Point from '../../helpers/Point';
 
 export default class Cable extends WorldObject {
     public health: number;
+    public maxHealth: number;
 
     constructor(options: CableOptions) {
         super({
@@ -15,7 +16,15 @@ export default class Cable extends WorldObject {
             },
         });
 
-        this.health = 100;
+        this.maxHealth = 100;
+        this.health = this.maxHealth;
+    }
+
+    public getBitten() {
+        this.health -= 10;
+        if (this.health < 0) {
+            this.health = 0;
+        }
     }
 }
 
