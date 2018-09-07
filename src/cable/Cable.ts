@@ -19,7 +19,7 @@ export default class Cable extends WorldObject {
     }
 }
 
-const cableDepth: number = 10;
+const cableDepth: number = 6;
 
 interface CableOptions {
     world: World;
