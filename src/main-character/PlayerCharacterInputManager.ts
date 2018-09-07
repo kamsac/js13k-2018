@@ -1,16 +1,20 @@
 import GameInput from '../input/GameInput';
 import Locator from '../Locator';
-import MainCharacter from './MainCharacter';
+import MainCharacter, {WalkingState} from './MainCharacter';
 
 export default class PlayerCharacterInputManager {
     private gameInput: GameInput = Locator.getGameInput();
 
     public update(character: MainCharacter): void {
+        if (character.fallenState !== WalkingState.WALKING) {
+            return;
+        }
+
         if (this.gameInput.bindings.attack.pressed) {
             character.attack();
         }
 
-        if (character.isJumping()) {
+        if (character.isInMidAir()) {
             return;
         }
 

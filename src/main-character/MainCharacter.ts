@@ -14,6 +14,7 @@ export default class MainCharacter extends WorldObject {
     public positionZ: number;
     public velocityZ: number;
     public forward: Vector;
+    public fallenState: WalkingState;
 
     constructor(world: World) {
         super({
@@ -32,6 +33,7 @@ export default class MainCharacter extends WorldObject {
         this.forward = new Vector(0, 1);
         this.positionZ = 0;
         this.velocityZ = 0;
+        this.fallenState = WalkingState.WALKING;
     }
 
     public update(): void {
@@ -39,7 +41,7 @@ export default class MainCharacter extends WorldObject {
         this.inputManager.update(this);
 
         this.velocity = this.velocity.add(this.inputVelocity);
-        if (!this.isJumping()) {
+        if (!this.isInMidAir()) {
             this.velocity = this.velocity.multiply(MOVEMENT_DUMP);
         }
         this.velocityZ -= gravity;
@@ -68,14 +70,18 @@ export default class MainCharacter extends WorldObject {
             this.velocityZ = 0;
         }
 
-        this.positionZ += this.velocityZ;
-
-        if (!this.isJumping()) {
+        if (!this.isInMidAir()) {
             this.world.cables.forEach((cable) => {
-                if (intersectAABB(this.getAABB(), cable.getAABB())) {
+                if (this.fallenState === WalkingState.WALKING && intersectAABB(this.getAABB(), cable.getAABB())) {
                     this.fallOverCable(cable);
                 }
             });
+        }
+
+        this.positionZ += this.velocityZ;
+
+        if (this.fallenState === WalkingState.FALLING && !this.isInMidAir()) {
+            this.fallenState = WalkingState.FALLEN;
         }
     }
 
@@ -96,12 +102,12 @@ export default class MainCharacter extends WorldObject {
     }
 
     public jump(): void {
-        if (!this.isJumping()) {
+        if (!this.isInMidAir()) {
             this.velocityZ = jumpForce;
         }
     }
 
-    public isJumping(): boolean {
+    public isInMidAir(): boolean {
         return this.positionZ > 0;
     }
 
@@ -111,6 +117,9 @@ export default class MainCharacter extends WorldObject {
 
     public fallOverCable(cable: Cable): void {
         cable.health = 0;
+        this.fallenState = WalkingState.FALLING;
+        this.velocity = this.velocity.multiply(0.3);
+        this.velocityZ = jumpForce / 2;
     }
 }
 
@@ -119,3 +128,5 @@ const MOVEMENT_DUMP: number = 0.9;
 
 const gravity: number = 0.1;
 const jumpForce: number = 2;
+
+export enum WalkingState { WALKING, FALLING, FALLEN };
