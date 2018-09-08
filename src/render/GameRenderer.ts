@@ -39,6 +39,8 @@ export default class GameRenderer {
     public render(world: World): void {
         this.clearCanvas();
 
+        this.setHitShakeEffect(world);
+
         this.renderWalls(world.roomWalls);
         this.cablesRenderer.render(world);
         this.computersRenderer.render(world);
@@ -59,6 +61,19 @@ export default class GameRenderer {
         walls.forEach((wall) => {
             this.context.fillRect(wall.x, wall.y, wall.width, wall.height);
         });
+    }
+
+    private setHitShakeEffect(world: World): void {
+        const maxStrength: number = 10;
+        const shakeTimeInTicks: number = 10;
+        const ticksSinceLastHit: number = (world.tick - world.flyswat.lastHit);
+        const shakeProgress: number = 1 - Math.min(ticksSinceLastHit, shakeTimeInTicks) / shakeTimeInTicks;
+
+        function getRandomOffset(): number {
+            return (Math.random()*maxStrength - maxStrength/2) * shakeProgress;
+        }
+
+        this.context.translate(getRandomOffset(), getRandomOffset());
     }
 
     private clearCanvas(): void {

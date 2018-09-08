@@ -5,7 +5,7 @@ import intersectAABB from '../../helpers/intersectAABB';
 
 export default class Flyswat extends WorldObject {
     public isHitting: boolean;
-    private lastHit: number;
+    public lastHit: number;
     private hitCooldown: number;
     public hitStreak: number;
 
