@@ -9,7 +9,14 @@ export default class ScoreRenderer {
 
     public render(world: World): void {
         this.drawInfoBox();
+
+        this.context.font = 'bold 42px monospace';
+        this.context.textAlign = 'left';
+        this.context.fillStyle = '#fff';
+        this.context.lineWidth = 2;
+
         this.drawScoreText(world);
+        this.drawStreakText(world);
     }
 
     private drawInfoBox(): void {
@@ -24,16 +31,22 @@ export default class ScoreRenderer {
     }
 
     private drawScoreText(world: World): void {
-        this.context.font = 'bold 64px monospace';
-        this.context.textAlign = 'left';
-        this.context.fillStyle = '#fff';
-        this.context.lineWidth = 3;
         const scoreText: string = `Score: ${world.score}`;
         this.context.fillText(scoreText, scoreTextLeftMargin, scoreTextTopMargin);
         this.context.strokeText(scoreText, scoreTextLeftMargin, scoreTextTopMargin);
     }
+
+    private drawStreakText(world: World): void {
+        const scoreText: string = `Hit streak: x${world.flyswat.hitStreak}`;
+        this.context.fillText(scoreText, streakTextLeft, streakTextTopMargin);
+        this.context.strokeText(scoreText, streakTextLeft, streakTextTopMargin);
+    }
 }
 
 const infoBoxHeight: number = 120;
-const scoreTextTopMargin: number = 80;
+
+const scoreTextTopMargin: number = 50;
 const scoreTextLeftMargin: number = 60;
+
+const streakTextTopMargin: number = 100;
+const streakTextLeft: number = 60;
