@@ -1,6 +1,7 @@
 import Point from '../../helpers/Point';
 import Cable from './Cable';
 import World from '../world/World';
+import Computer from './Computer';
 
 export default class CableBuilder {
     private world: World;
@@ -9,8 +10,8 @@ export default class CableBuilder {
         this.world = world;
     }
 
-    public createCables(points: Point[]): Cable[] {
-        if (points.length < 2) {
+    public createCables(points: Point[], computers: Computer[]): Cable[] {
+        if (points.length < 2 || computers.length !== 2) {
             return [];
         }
 
@@ -29,6 +30,7 @@ export default class CableBuilder {
                     position: this.getWalkingAreaPoint(middlePosition),
                     angle: isVertical ? 'vertical' : 'horizontal',
                     length: lengthOfLineSegment(previousPoint, currentPoint),
+                    computers,
                 }),
             );
         }

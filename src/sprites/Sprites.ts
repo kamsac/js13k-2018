@@ -9,6 +9,9 @@ const insectDead = require('./Insect-dead.png');
 
 const flyswat = require('./Flyswat.png');
 
+const computerHorizontal = require('./Computer-horizontal.png');
+const computerVertical = require('./Computer-vertical.png');
+
 function createSprite(sprite: string): HTMLImageElement {
     const image = new Image();
     image.src = sprite;
@@ -30,10 +33,16 @@ const insect = {
     dead: createSprite(insectDead),
 };
 
+const computer = {
+    vertical: createSprite(computerVertical),
+    horizontal: createSprite(computerHorizontal),
+};
+
 const Sprites = {
     mainCharacter,
     insect,
     flyswat: createSprite(flyswat),
+    computer,
 };
 
 export default Sprites;

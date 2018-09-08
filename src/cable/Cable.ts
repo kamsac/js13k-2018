@@ -1,10 +1,12 @@
 import WorldObject from '../world/WorldObject';
 import World from '../world/World';
 import Point from '../../helpers/Point';
+import Computer from './Computer';
 
 export default class Cable extends WorldObject {
     public health: number;
     public maxHealth: number;
+    public computers: Computer[];
 
     constructor(options: CableOptions) {
         super({
@@ -18,6 +20,7 @@ export default class Cable extends WorldObject {
 
         this.maxHealth = 100;
         this.health = this.maxHealth;
+        this.computers = options.computers;
     }
 
     public getBitten(): void {
@@ -25,6 +28,12 @@ export default class Cable extends WorldObject {
         if (this.health < 0) {
             this.health = 0;
         }
+    }
+
+    public triggerRipPluginOutOfSockets(): void {
+        this.computers.forEach((computer) => {
+            computer.ripThePlugOutOfSocket();
+        });
     }
 }
 
@@ -35,4 +44,5 @@ interface CableOptions {
     position: Point,
     angle: 'vertical' | 'horizontal',
     length: number,
+    computers: Computer[],
 }

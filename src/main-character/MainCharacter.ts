@@ -117,6 +117,7 @@ export default class MainCharacter extends WorldObject {
 
     public fallOverCable(cable: Cable): void {
         cable.health = 0;
+        cable.triggerRipPluginOutOfSockets();
         this.fallenState = WalkingState.FALLING;
         this.velocity = this.velocity.multiply(0.3);
         this.velocityZ = jumpForce / 2;

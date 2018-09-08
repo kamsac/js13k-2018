@@ -6,6 +6,7 @@ import FlyswatRenderer, {isFlyswatBehindPlayer} from './FlyswatRenderer';
 import InsectsRenderer from './InsectsRenderer';
 import CablesRenderer from './CablesRenderer';
 import ScoreRenderer from './ScoreRenderer';
+import ComputersRenderer from './ComputersRenderer';
 
 export const canvasSize: Size = {
     width: 800,
@@ -20,6 +21,7 @@ export default class GameRenderer {
     private flyswatRenderer: FlyswatRenderer;
     private insectsRenderer: InsectsRenderer;
     private cablesRenderer: CablesRenderer;
+    private computersRenderer: ComputersRenderer;
     private scoreRenderer: ScoreRenderer;
 
     public constructor() {
@@ -30,6 +32,7 @@ export default class GameRenderer {
         this.flyswatRenderer = new FlyswatRenderer(this.context);
         this.insectsRenderer = new InsectsRenderer(this.context);
         this.cablesRenderer = new CablesRenderer(this.context);
+        this.computersRenderer = new ComputersRenderer(this.context);
         this.scoreRenderer = new ScoreRenderer(this.context);
     }
 
@@ -38,6 +41,7 @@ export default class GameRenderer {
 
         this.renderWalls(world.roomWalls);
         this.cablesRenderer.render(world);
+        this.computersRenderer.render(world);
         this.insectsRenderer.render(world);
         this.scoreRenderer.render(world);
 

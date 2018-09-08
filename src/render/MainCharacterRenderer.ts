@@ -22,10 +22,10 @@ export default class MainCharacterRenderer {
 
         this.context.drawImage(
             Sprites.mainCharacter[direction],
-            (player.position.x - spriteSize.width/2)|0,
-            (player.position.y - spriteSize.height + playerAABB.height/2 - player.positionZ)|0,
-            (spriteSize.width)|0,
-            (spriteSize.height)|0,
+            (player.position.x - spriteSize.width/2),
+            (player.position.y - spriteSize.height + playerAABB.height/2 - player.positionZ),
+            (spriteSize.width),
+            (spriteSize.height),
         );
     }
 
