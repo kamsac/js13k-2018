@@ -14,7 +14,6 @@ export default class MainCharacter extends WorldObject {
     public positionZ: number;
     public velocityZ: number;
     public forward: Vector;
-    public fallenState: WalkingState;
 
     constructor(world: World) {
         super({
@@ -33,7 +32,6 @@ export default class MainCharacter extends WorldObject {
         this.forward = new Vector(0, 1);
         this.positionZ = 0;
         this.velocityZ = 0;
-        this.fallenState = WalkingState.WALKING;
     }
 
     public update(): void {
@@ -72,17 +70,13 @@ export default class MainCharacter extends WorldObject {
 
         if (!this.isInMidAir()) {
             this.world.cables.forEach((cable) => {
-                if (this.fallenState === WalkingState.WALKING && intersectAABB(this.getAABB(), cable.getAABB())) {
+                if (intersectAABB(this.getAABB(), cable.getAABB())) {
                     this.fallOverCable(cable);
                 }
             });
         }
 
         this.positionZ += this.velocityZ;
-
-        if (this.fallenState === WalkingState.FALLING && !this.isInMidAir()) {
-            this.fallenState = WalkingState.FALLEN;
-        }
     }
 
     public moveUp(): void {
@@ -116,10 +110,8 @@ export default class MainCharacter extends WorldObject {
     }
 
     public fallOverCable(cable: Cable): void {
-        cable.health = 0;
-        cable.triggerRipPluginOutOfSockets();
-        this.fallenState = WalkingState.FALLING;
-        this.velocity = this.velocity.multiply(0.3);
+        cable.getSteppedOnByMainCharacter();
+        this.velocity = this.forward.multiply(1.5);
         this.velocityZ = jumpForce / 2;
     }
 }
@@ -129,5 +121,3 @@ const MOVEMENT_DUMP: number = 0.9;
 
 const gravity: number = 0.1;
 const jumpForce: number = 2;
-
-export enum WalkingState { WALKING, FALLING, FALLEN };

@@ -15,6 +15,7 @@ export default class Game {
     private readonly world: World;
     private readonly gameRenderer: GameRenderer;
     private readonly gameInput: GameInput;
+    public state: GameState;
 
     public constructor() {
         this.ticksPerSecond = 60;
@@ -25,6 +26,7 @@ export default class Game {
         this.gameRenderer = new GameRenderer();
         this.gameInput = new KeyboardAndMouseGameInput(this.gameRenderer.canvas);
         Locator.provideGameInput(this.gameInput);
+        this.state = GameState.Gameplay;
         this.world = new World(this);
         this.initFpsStats();
         this.requestNextFrame();
@@ -63,4 +65,10 @@ export default class Game {
         this.fpsStats.showPanel(0);
         document.body.appendChild(this.fpsStats.dom);
     }
+}
+
+export enum GameState {
+    SplashScreen,
+    Gameplay,
+    GameOver,
 }

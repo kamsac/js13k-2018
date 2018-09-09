@@ -19,8 +19,4 @@ export default class Computer extends WorldObject {
         this.isConnected = true;
         this.facingDirection = facingDirection;
     }
-
-    public ripThePlugOutOfSocket(): void {
-        this.isConnected = false;
-    }
 }

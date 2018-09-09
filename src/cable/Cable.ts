@@ -2,6 +2,7 @@ import WorldObject from '../world/WorldObject';
 import World from '../world/World';
 import Point from '../../helpers/Point';
 import Computer from './Computer';
+import {GameState} from '../Game';
 
 export default class Cable extends WorldObject {
     public health: number;
@@ -23,6 +24,12 @@ export default class Cable extends WorldObject {
         this.computers = options.computers;
     }
 
+    public update(): void {
+        if (this.health <= 0) {
+            this.disconnectComputers();
+        }
+    }
+
     public getBitten(): void {
         this.health -= 10;
         if (this.health < 0) {
@@ -30,10 +37,19 @@ export default class Cable extends WorldObject {
         }
     }
 
-    public triggerRipPluginOutOfSockets(): void {
+    public getSteppedOnByMainCharacter(): void {
+        this.health -= 25;
+        if (this.health < 0) {
+            this.health = 0;
+        }
+    }
+
+    public disconnectComputers(): void {
         this.computers.forEach((computer) => {
-            computer.ripThePlugOutOfSocket();
+            computer.isConnected = false;
         });
+
+        this.world.game.state = GameState.GameOver;
     }
 }
 

@@ -13,7 +13,7 @@ import Computer from "../cable/Computer";
 export const worldSize: Size = canvasSize;
 
 export default class World {
-    private game: Game;
+    public game: Game;
     public tick: number;
     public player: MainCharacter;
     public roomWalls: AABB[];
@@ -51,6 +51,9 @@ export default class World {
         });
         this.player.update();
         this.flyswat.update();
+        this.cables.forEach((cable) => {
+            cable.update();
+        });
     }
 
     public spawnInsect(): void {

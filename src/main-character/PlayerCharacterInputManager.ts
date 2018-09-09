@@ -1,12 +1,13 @@
 import GameInput from '../input/GameInput';
 import Locator from '../Locator';
-import MainCharacter, {WalkingState} from './MainCharacter';
+import MainCharacter from './MainCharacter';
+import {GameState} from '../Game';
 
 export default class PlayerCharacterInputManager {
     private gameInput: GameInput = Locator.getGameInput();
 
     public update(character: MainCharacter): void {
-        if (character.fallenState !== WalkingState.WALKING) {
+        if (character.world.game.state !== GameState.Gameplay) {
             return;
         }
 
