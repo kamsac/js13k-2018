@@ -47,6 +47,8 @@ export default class Flyswat extends WorldObject {
             if (!killedAnything) {
                 this.resetHitStreak();
             }
+
+            this.hitCooldown = killedAnything ? 30 : 60;
         }
     }
 
