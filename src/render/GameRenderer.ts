@@ -7,6 +7,8 @@ import InsectsRenderer from './InsectsRenderer';
 import CablesRenderer from './CablesRenderer';
 import ScoreRenderer from './ScoreRenderer';
 import ComputersRenderer from './ComputersRenderer';
+import GameOverRenderer from './GameOverRenderer';
+import Game, {GameState} from '../Game';
 
 export const canvasSize: Size = {
     width: 800,
@@ -14,6 +16,7 @@ export const canvasSize: Size = {
 };
 
 export default class GameRenderer {
+    private game: Game;
     public canvas!: HTMLCanvasElement;
     private context!: CanvasRenderingContext2D;
 
@@ -23,8 +26,11 @@ export default class GameRenderer {
     private cablesRenderer: CablesRenderer;
     private computersRenderer: ComputersRenderer;
     private scoreRenderer: ScoreRenderer;
+    private gameOverRenderer: GameOverRenderer;
 
-    public constructor() {
+    public constructor(game: Game) {
+        this.game = game;
+
         this.createCanvas();
         this.attachCanvas();
 
@@ -34,6 +40,7 @@ export default class GameRenderer {
         this.cablesRenderer = new CablesRenderer(this.context);
         this.computersRenderer = new ComputersRenderer(this.context);
         this.scoreRenderer = new ScoreRenderer(this.context);
+        this.gameOverRenderer = new GameOverRenderer(this.context);
     }
 
     public render(world: World): void {
@@ -53,6 +60,10 @@ export default class GameRenderer {
         } else {
             this.mainCharacterRenderer.render(world.player);
             this.flyswatRenderer.render(world);
+        }
+
+        if (this.game.state === GameState.GameOver) {
+            this.gameOverRenderer.render(world);
         }
     }
 

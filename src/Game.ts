@@ -6,7 +6,7 @@ import GameInput from './input/GameInput';
 import World from './world/World';
 
 export default class Game {
-    private readonly ticksPerSecond: number;
+    public readonly ticksPerSecond: number;
     private readonly tickTime: number; // ms
     private lastTickTime: number; // ms
     private currentUpdateLag: number; // ms
@@ -23,7 +23,7 @@ export default class Game {
         this.lastTickTime = 0;
         this.currentUpdateLag = 0;
         this.maxUpdateLag = 500;
-        this.gameRenderer = new GameRenderer();
+        this.gameRenderer = new GameRenderer(this);
         this.gameInput = new KeyboardAndMouseGameInput(this.gameRenderer.canvas);
         Locator.provideGameInput(this.gameInput);
         this.state = GameState.Gameplay;

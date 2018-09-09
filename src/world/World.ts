@@ -7,14 +7,15 @@ import Insect from '../insect/Insect';
 import Cable from '../cable/Cable';
 import Point from '../../helpers/Point';
 import CableBuilder from '../cable/CableBuilder';
-import Game from '../Game';
-import Computer from "../cable/Computer";
+import Game, {GameState} from '../Game';
+import Computer from '../cable/Computer';
 
 export const worldSize: Size = canvasSize;
 
 export default class World {
     public game: Game;
     public tick: number;
+    public ticksSurvivedFor: number;
     public player: MainCharacter;
     public roomWalls: AABB[];
     public flyswat: Flyswat;
@@ -27,6 +28,7 @@ export default class World {
     public constructor(game: Game) {
         this.game = game;
         this.tick = 0;
+        this.ticksSurvivedFor = 0;
         this.player = new MainCharacter(this);
         this.flyswat = new Flyswat(this);
 
@@ -54,6 +56,10 @@ export default class World {
         this.cables.forEach((cable) => {
             cable.update();
         });
+
+        if (this.game.state !== GameState.GameOver) {
+            this.ticksSurvivedFor = this.tick;
+        }
     }
 
     public spawnInsect(): void {

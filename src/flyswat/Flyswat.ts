@@ -8,6 +8,7 @@ export default class Flyswat extends WorldObject {
     public lastHit: number;
     private hitCooldown: number;
     public hitStreak: number;
+    public highestHitStreak: number;
 
     constructor(world: World) {
         super({
@@ -22,6 +23,7 @@ export default class Flyswat extends WorldObject {
         this.lastHit = 0;
         this.isHitting = false;
         this.hitStreak = 0;
+        this.highestHitStreak = 0;
     }
 
     public update(): void {
@@ -54,6 +56,7 @@ export default class Flyswat extends WorldObject {
 
     public increaseHitStreak(): void {
         this.hitStreak += 1;
+        this.highestHitStreak = this.hitStreak > this.highestHitStreak ? this.hitStreak : this.highestHitStreak;
     }
 
     public resetHitStreak(): void {
