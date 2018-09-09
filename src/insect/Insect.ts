@@ -16,6 +16,8 @@ export default class Insect extends WorldObject {
     public animationFrame: number;
     public isBiting: boolean;
     public lastBite: number;
+    public wantsToBite: boolean;
+    private ticksToBiteState: number;
 
     constructor(world: World) {
         const collisionMask: Size = {
@@ -40,6 +42,8 @@ export default class Insect extends WorldObject {
         this.animationFrame = 0;
         this.isBiting = false;
         this.lastBite = 0;
+        this.wantsToBite = false;
+        this.ticksToBiteState = 60*8;
     }
 
     public update(): void {
@@ -47,6 +51,10 @@ export default class Insect extends WorldObject {
             return;
         }
 
+        this.ticksToBiteState--;
+        if (this.ticksToBiteState < 0) {
+            this.wantsToBite = true;
+        }
         this.ticksSinceMoveChange++;
         if (this.ticksSinceMoveChange > this.ticksToMoveChange) {
             this.ticksSinceMoveChange = 0;
@@ -60,7 +68,7 @@ export default class Insect extends WorldObject {
         const targetPositionX: Point = new Point(targetPosition.x, this.position.y);
         const targetPositionY: Point = new Point(this.position.x, targetPosition.y);
 
-        if (this.wantsToMove) {
+        if (this.wantsToMove && !this.isBiting) {
             this.world.roomWalls.forEach((wall) => {
                 if (intersectAABB(this.getAABB({targetPosition: targetPositionX}), wall)) {
                     this.velocity.x = 0;
@@ -76,14 +84,16 @@ export default class Insect extends WorldObject {
             }
         }
 
-        this.world.cables.forEach((cable) => {
-            if (!this.isBiting && intersectAABB(this.getAABB({targetPosition}), cable.getAABB())) {
-                this.biteCable(cable);
-            }
-        });
+        if (this.wantsToBite) {
+            this.world.cables.forEach((cable) => {
+                if (!this.isBiting && intersectAABB(this.getAABB({targetPosition}), cable.getAABB())) {
+                    this.biteCable(cable);
+                }
+            });
 
-        if (this.world.tick - this.lastBite > biteCooldown) {
-            this.isBiting = false;
+            if (this.world.tick - this.lastBite > biteCooldown) {
+                this.isBiting = false;
+            }
         }
     }
 
