@@ -4,6 +4,7 @@ import Locator from './Locator';
 import GameRenderer from './render/GameRenderer';
 import GameInput from './input/GameInput';
 import World from './world/World';
+import SoundPlayer from './sound/SoundPlayer';
 
 export default class Game {
     public readonly ticksPerSecond: number;
@@ -16,6 +17,7 @@ export default class Game {
     private readonly gameRenderer: GameRenderer;
     private readonly gameInput: GameInput;
     public state: GameState;
+    private soundPlayer: SoundPlayer;
 
     public constructor() {
         this.ticksPerSecond = 60;
@@ -27,9 +29,12 @@ export default class Game {
         this.gameInput = new KeyboardAndMouseGameInput(this.gameRenderer.canvas);
         Locator.provideGameInput(this.gameInput);
         this.state = GameState.Gameplay;
+        this.soundPlayer = new SoundPlayer();
         this.world = new World(this);
         this.initFpsStats();
         this.requestNextFrame();
+
+        this.soundPlayer.playMusic();
     }
 
     private requestNextFrame(): void {
