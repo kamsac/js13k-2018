@@ -49,7 +49,7 @@ export default class Cable extends WorldObject {
             computer.isConnected = false;
         });
 
-        this.world.game.state = GameState.GameOver;
+        this.world.game.setState(GameState.GameOver);
     }
 }
 

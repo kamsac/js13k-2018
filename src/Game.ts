@@ -13,10 +13,12 @@ export default class Game {
     private currentUpdateLag: number; // ms
     private readonly maxUpdateLag: number; // ms
     private fpsStats!: Stats;
-    private readonly world: World;
+    private world: World;
     private readonly gameRenderer: GameRenderer;
     private readonly gameInput: GameInput;
+    private tick: number;
     public state: GameState;
+    private lastStateChange: number;
     public soundPlayer: SoundPlayer;
 
     public constructor() {
@@ -28,13 +30,27 @@ export default class Game {
         this.gameRenderer = new GameRenderer(this);
         this.gameInput = new KeyboardAndMouseGameInput(this.gameRenderer.canvas);
         Locator.provideGameInput(this.gameInput);
+        this.tick = 0;
         this.state = GameState.Gameplay;
+        this.lastStateChange = 0;
         this.soundPlayer = new SoundPlayer();
         this.world = new World(this);
         this.initFpsStats();
         this.requestNextFrame();
 
         this.playMusic();
+    }
+
+    public restartWorld(): void {
+        this.setState(GameState.Gameplay);
+        this.world = new World(this);
+    }
+
+    public setState(state: GameState): void {
+        if (this.state !== state) {
+            this.state = state;
+            this.lastStateChange = this.tick;
+        }
     }
 
     private requestNextFrame(): void {
@@ -57,8 +73,20 @@ export default class Game {
     }
 
     private update(deltaTimeInSeconds: number): void {
+        this.tick++;
         this.world.update();
         this.gameInput.update();
+
+        if (this.state === GameState.GameOver) {
+            if (
+                this.tick - this.lastStateChange > gameOverForcedCooldown &&
+                (
+                    this.gameInput.bindings.attack.pressed ||
+                    this.gameInput.bindings.jump.pressed
+                )
+            )
+                this.restartWorld();
+        }
     }
 
     private render(): void {
@@ -93,3 +121,5 @@ export enum GameState {
     Gameplay,
     GameOver,
 }
+
+const gameOverForcedCooldown: number = 90;
