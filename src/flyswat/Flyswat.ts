@@ -1,7 +1,8 @@
 import Point from '../../helpers/Point';
 import WorldObject from '../world/WorldObject';
-import World from '../world/World';
+import World, {worldSize} from '../world/World';
 import intersectAABB from '../../helpers/intersectAABB';
+import {SOUND_NAMES} from "../sound/SoundPlayer";
 
 export default class Flyswat extends WorldObject {
     public isHitting: boolean;
@@ -36,6 +37,9 @@ export default class Flyswat extends WorldObject {
 
     public hit(): void {
         if (this.world.tick - this.lastHit > this.hitCooldown) {
+            this.world.game.soundPlayer.playSound(SOUND_NAMES.Hit, {
+                pan: (this.position.x / worldSize.width) * 2 - 1,
+            });
             let killedAnything = false;
             this.isHitting = true;
             this.world.insects.forEach((insect) => {

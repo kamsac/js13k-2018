@@ -6,9 +6,9 @@
 
 // Song data
 
-// CREDITS TO ZIO!
+// Credits to zio!
 
-var song = {
+const gameplayMusic = {
     songData: [
         { // Instrument 0
             i: [
@@ -265,4 +265,4 @@ var song = {
     numChannels: 6  // Number of channels
 };
 
-export default song;
+export default gameplayMusic;

@@ -4,7 +4,7 @@ import Locator from './Locator';
 import GameRenderer from './render/GameRenderer';
 import GameInput from './input/GameInput';
 import World from './world/World';
-import SoundPlayer from './sound/SoundPlayer';
+import SoundPlayer, {SOUND_NAMES} from './sound/SoundPlayer';
 
 export default class Game {
     public readonly ticksPerSecond: number;
@@ -17,7 +17,7 @@ export default class Game {
     private readonly gameRenderer: GameRenderer;
     private readonly gameInput: GameInput;
     public state: GameState;
-    private soundPlayer: SoundPlayer;
+    public soundPlayer: SoundPlayer;
 
     public constructor() {
         this.ticksPerSecond = 60;
@@ -34,7 +34,7 @@ export default class Game {
         this.initFpsStats();
         this.requestNextFrame();
 
-        this.soundPlayer.playMusic();
+        this.playMusic();
     }
 
     private requestNextFrame(): void {
@@ -69,6 +69,22 @@ export default class Game {
         this.fpsStats = new Stats();
         this.fpsStats.showPanel(0);
         document.body.appendChild(this.fpsStats.dom);
+    }
+
+    private playMusic(): void {
+        addEventListener(
+            'keypress',
+            () => {
+                // ready for chrome
+                const haxDelay: number = 1000;
+                window.setTimeout(() => {
+                    this.soundPlayer.playSound(SOUND_NAMES.GameplayMusic, {loop: true});
+                }, haxDelay);
+            },
+            {
+                once: true,
+            },
+        );
     }
 }
 
