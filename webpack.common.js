@@ -42,7 +42,7 @@ module.exports = {
                 enabled: false,
               },
               pngquant: {
-                quality: '10',
+                quality: '2',
                 speed: 1
               },
               gifsicle: {

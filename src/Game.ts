@@ -5,6 +5,7 @@ import GameRenderer from './render/GameRenderer';
 import GameInput from './input/GameInput';
 import World from './world/World';
 import SoundPlayer, {SOUND_NAMES} from './sound/SoundPlayer';
+import Sprites from "./sprites/Sprites";
 
 export default class Game {
     public readonly ticksPerSecond: number;
@@ -38,7 +39,9 @@ export default class Game {
         this.initFpsStats();
         this.requestNextFrame();
 
-        this.playMusic();
+        window.addEventListener('imagesReady', () => {
+            this.playMusic();
+        });
     }
 
     public restartWorld(): void {

@@ -9,11 +9,12 @@ import Cable from '../cable/Cable';
 export default class MainCharacter extends WorldObject {
     private inputManager: PlayerCharacterInputManager;
     private inputVelocity: Vector;
-    private velocity: Vector;
+    public velocity: Vector;
     public position: Point;
     public positionZ: number;
     public velocityZ: number;
     public forward: Vector;
+    public distanceTraveled: number;
 
     constructor(world: World) {
         super({
@@ -32,6 +33,7 @@ export default class MainCharacter extends WorldObject {
         this.forward = new Vector(0, 1);
         this.positionZ = 0;
         this.velocityZ = 0;
+        this.distanceTraveled = 0;
     }
 
     public update(): void {
@@ -67,6 +69,8 @@ export default class MainCharacter extends WorldObject {
             this.positionZ = 0;
             this.velocityZ = 0;
         }
+
+        this.distanceTraveled += this.isInMidAir() ? this.velocity.length()/2 : this.velocity.length();
 
         if (!this.isInMidAir()) {
             this.world.cables.forEach((cable) => {

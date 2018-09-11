@@ -1,8 +1,8 @@
 import MainCharacter from '../main-character/MainCharacter';
 import AABB from '../../helpers/AABB';
 import Size from '../../helpers/Size';
-import Sprites from '../sprites/Sprites';
 import Direction from '../../helpers/Direction';
+import mainCharacterImprovedSprites, {playerSpriteSize} from '../sprites/mainCharacterImprovedSprite';
 
 export default class MainCharacterRenderer {
     private context: CanvasRenderingContext2D;
@@ -14,14 +14,15 @@ export default class MainCharacterRenderer {
         const playerAABB: AABB = player.getAABB({roundPositions: true});
 
         this.drawShadow(player, playerAABB);
-        this.drawCharacter(player, playerSpriteSize, playerAABB);
+        this.drawCharacter(player, playerRenderSize, playerAABB);
     }
 
     private drawCharacter(player: MainCharacter, spriteSize: Size, playerAABB: AABB): void {
         const direction: Direction = player.forward.direction();
+        const animationFrame: number = player.velocity.length() < 0.05 ? 0 : (player.distanceTraveled/25 % 4)|0;
 
         this.context.drawImage(
-            Sprites.mainCharacter[direction],
+            mainCharacterImprovedSprites[direction][animationFrame],
             (player.position.x - spriteSize.width/2),
             (player.position.y - spriteSize.height + playerAABB.height/2 - player.positionZ),
             (spriteSize.width),
@@ -45,7 +46,7 @@ export default class MainCharacterRenderer {
     }
 }
 
-export const playerSpriteSize: Size = {
-    width: 64,
-    height: 64,
-};
+export const playerRenderSize: Size = {
+    width: playerSpriteSize.width * 2,
+    height: playerSpriteSize.height * 2,
+}

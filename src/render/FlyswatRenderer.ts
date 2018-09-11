@@ -3,10 +3,10 @@ import AABB from '../../helpers/AABB';
 import Sprites from '../sprites/Sprites';
 import Point from '../../helpers/Point';
 import MainCharacter from '../main-character/MainCharacter';
-import {playerSpriteSize} from './MainCharacterRenderer';
+import {playerRenderSize} from './MainCharacterRenderer';
 import Direction from '../../helpers/Direction';
 
-export default class FlyswatRenderer {
+export default class FlyswatImprovedRenderer {
     private context: CanvasRenderingContext2D;
     constructor(context: CanvasRenderingContext2D) {
         this.context = context;
@@ -41,25 +41,25 @@ export default class FlyswatRenderer {
 }
 
 function getPlayerRightHandPosition(player: MainCharacter): Point {
-    let centerOff: Point = new Point(0, 16);
+    let centerOff: Point = new Point(0, 20);
     switch (player.forward.direction()) {
         case 'up':
             centerOff.x = 10;
             break;
         case 'right':
-            centerOff.x = -4;
+            centerOff.x = 0;
             break;
         case 'down':
             centerOff.x = -10;
             break;
         case 'left':
-            centerOff.x = 4;
+            centerOff.x = 0;
             break;
     }
 
     return new Point(
         player.position.x + centerOff.x,
-        player.position.y - playerSpriteSize.height/2 - player.positionZ + centerOff.y,
+        player.position.y - playerRenderSize.height/2 - player.positionZ + centerOff.y,
     );
 }
 

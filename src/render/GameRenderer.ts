@@ -10,6 +10,7 @@ import ComputersRenderer from './ComputersRenderer';
 import GameOverRenderer from './GameOverRenderer';
 import Game, {GameState} from '../Game';
 import SplashScreenRenderer from './SplashScreenRenderer';
+import Sprites from "../sprites/Sprites";
 
 export const canvasSize: Size = {
     width: 800,
