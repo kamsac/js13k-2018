@@ -6,7 +6,7 @@ import MainCharacter from '../main-character/MainCharacter';
 import {playerRenderSize} from './MainCharacterRenderer';
 import Direction from '../../helpers/Direction';
 
-export default class FlyswatImprovedRenderer {
+export default class FlyswatRenderer {
     private context: CanvasRenderingContext2D;
     constructor(context: CanvasRenderingContext2D) {
         this.context = context;

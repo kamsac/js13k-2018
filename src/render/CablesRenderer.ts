@@ -1,5 +1,8 @@
 import World from '../world/World';
 import AABB from '../../helpers/AABB';
+import Sprites from '../sprites/Sprites';
+import Size from '../../helpers/Size';
+import SimpleAngle from '../../helpers/SimpleAngle';
 
 export default class CablesRenderer {
     private context: CanvasRenderingContext2D;
@@ -11,19 +14,39 @@ export default class CablesRenderer {
         world.cables.forEach((cable) => {
             const aabb: AABB = cable.getAABB();
             const destroyed: number = 1 - (cable.health / cable.maxHealth);
-            const percent: number = destroyed * 50;
+            const destroyIndexMax: number = 4;
+            const destroyIndex: number = (destroyIndexMax * destroyed)|0;
+            const angle: SimpleAngle = cable.angle;
 
-            this.context.fillStyle = '#000';
-            this.context.fillRect(aabb.x, aabb.y, aabb.width, aabb.height);
-            this.context.fillStyle = `hsl(0, 100%, ${percent}%)`;
-            this.context.fillRect(
-                aabb.x + destroyIndicatorMargin,
-                aabb.y + destroyIndicatorMargin,
-                aabb.width - destroyIndicatorMargin * 2,
-                aabb.height - destroyIndicatorMargin * 2,
+            const renderAabb: AABB = angle === 'horizontal'
+                ?
+                {
+                    x: aabb.x,
+                    y: aabb.y - spriteVsCollisionPadding,
+                    width: spriteRenderSize.width,
+                    height: spriteRenderSize.height + spriteVsCollisionPadding,
+                }
+                :
+                {
+                    x: aabb.x - spriteVsCollisionPadding,
+                    y: aabb.y,
+                    width: spriteRenderSize.height! + spriteVsCollisionPadding,
+                    height: spriteRenderSize.width!,
+                };
+
+            this.context.drawImage(
+                Sprites.cable[angle][destroyIndex],
+                renderAabb.x|0,
+                renderAabb.y|0,
+                renderAabb.width|0,
+                renderAabb.height|0,
             );
         });
     }
 }
 
-const destroyIndicatorMargin: number = 2;
+const spriteVsCollisionPadding: number = 1;
+const spriteRenderSize: Size = {
+    width: 50,
+    height: 8,
+};

@@ -187,14 +187,14 @@ export default class World {
             ...cable2,
             ...cable3,
             ...cable4,
-            ...cable5
+            ...cable5,
         );
         this.computers.push(
             ...cable1Computers,
             ...cable2Computers,
             ...cable3Computers,
             ...cable4Computers,
-            ...cable5Computers
+            ...cable5Computers,
         );
     }
 

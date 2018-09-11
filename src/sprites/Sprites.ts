@@ -1,5 +1,6 @@
-import mainCharacterImprovedSprites from './mainCharacterImprovedSprite';
+import mainCharacterSprites from './mainCharacterSprites';
 import {createSprite} from './sprite-loaders';
+import cableSprites from './cableSprites';
 
 const insectWalking1 = require('./images/Insect-walking-1.png');
 const insectWalking2 = require('./images/Insect-walking-2.png');
@@ -24,10 +25,11 @@ const computer = {
 };
 
 const Sprites = {
-    character: mainCharacterImprovedSprites,
+    character: mainCharacterSprites,
     insect,
     flyswat: createSprite(flyswat),
     computer,
+    cable: cableSprites,
 };
 
 export default Sprites;

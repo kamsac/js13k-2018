@@ -1,64 +1,16 @@
 import AABB from '../../helpers/AABB';
-import {playerSpriteSize} from './mainCharacterImprovedSprite';
+import Size from '../../helpers/Size';
 
-// class SpriteLoader {
-//     public createSpriteOutOfSpritesheet(image: HTMLImageElement, aabb: AABB): HTMLCanvasElement {
-//         const canvas: HTMLCanvasElement = document.createElement('canvas');
-//         canvas.width = aabb.width;
-//         canvas.height = aabb.height;
-//
-//         const context: CanvasRenderingContext2D = canvas.getContext('2d')!;
-//         context.drawImage(
-//             image,
-//             aabb.x, aabb.y, aabb.width, aabb.height,
-//             0, 0, aabb.width, aabb.height,
-//         );
-//
-//         this.handleOnLoad();
-//
-//         return canvas;
-//     }
-//
-//     public getCharacterSpritesheetAabbTile(x: number, y: number): AABB {
-//         return {
-//             x: playerSpriteSize.width * x,
-//             y: playerSpriteSize.height * y,
-//             width: playerSpriteSize.width,
-//             height: playerSpriteSize.height,
-//         }
-//     }
-//
-//     public createSprite(sprite: string, callback?: () => void): HTMLImageElement {
-//         const image = new Image();
-//         image.onload = () => this.handleOnLoad(callback);
-//         image.src = sprite;
-//         return image;
-//     }
-//
-//     private handleOnLoad(callback?: () => void): void {
-//         imagesReady++;
-//         if (callback) {
-//             callback();
-//         }
-//         if (imagesReady === allSpritesCount) {
-//             window.dispatchEvent(imagesReadyEvent);
-//         }
-//     }
-// }
-//
-// const TheSpriteLoader = new SpriteLoader();
-// export default TheSpriteLoader;
-
-export function createSpriteOutOfSpritesheet(image: HTMLImageElement, aabb: AABB): HTMLCanvasElement {
-    const canvas: HTMLCanvasElement = document.createElement('canvas');
-    canvas.width = aabb.width;
-    canvas.height = aabb.height;
+export function createSpriteOutOfSpritesheet(image: HTMLImageElement, tileAabb: AABB): HTMLCanvasElement {
+    let canvas: HTMLCanvasElement = document.createElement('canvas');
+    canvas.width = tileAabb.width;
+    canvas.height = tileAabb.height;
 
     const context: CanvasRenderingContext2D = canvas.getContext('2d')!;
     context.drawImage(
         image,
-        aabb.x, aabb.y, aabb.width, aabb.height,
-        0, 0, aabb.width, aabb.height,
+        tileAabb.x, tileAabb.y, tileAabb.width, tileAabb.height,
+        0, 0, canvas.width, canvas.height,
     );
 
     handleOnLoad();
@@ -66,20 +18,20 @@ export function createSpriteOutOfSpritesheet(image: HTMLImageElement, aabb: AABB
     return canvas;
 }
 
-export function getCharacterSpritesheetAabbTile(x: number, y: number): AABB {
-    return {
-        x: playerSpriteSize.width * x,
-        y: playerSpriteSize.height * y,
-        width: playerSpriteSize.width,
-        height: playerSpriteSize.height,
-    }
-}
-
 export function createSprite(sprite: string, callback?: () => void): HTMLImageElement {
     const image = new Image();
     image.onload = () => handleOnLoad(callback);
     image.src = sprite;
     return image;
+}
+
+export function getSpritesheetAabbTile(x: number, y: number, size: Size): AABB {
+    return {
+        x: size.width * x,
+        y: size.height * y,
+        width: size.width,
+        height: size.height,
+    }
 }
 
 function handleOnLoad(callback?: () => void): void {

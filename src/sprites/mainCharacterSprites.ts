@@ -1,8 +1,8 @@
 import Size from '../../helpers/Size';
 import Direction from '../../helpers/Direction';
-import {createSprite, createSpriteOutOfSpritesheet, getCharacterSpritesheetAabbTile} from './sprite-loaders';
+import {createSprite, createSpriteOutOfSpritesheet, getSpritesheetAabbTile} from './sprite-loaders';
 
-const mainCharacterImprovedSpritesheet = require('./images/MainCharacterImprovedSpritesheet.png');
+const mainCharacterSpritesheet = require('./images/MainCharacterSpritesheet.png');
 
 export const playerSpriteSize: Size = {
     width: 14,
@@ -12,31 +12,31 @@ export const playerSpriteSize: Size = {
 const spritesheetDirections: Direction[] = ['down', 'up', 'left', 'right'];
 const animationFramesPerDirection: number = 4;
 
-const mainCharacterImprovedSprites: MainCharacterImprovedSprite = {
+const mainCharacterSprites: MainCharacterSprites = {
     up: [],
     down: [],
     left: [],
     right: [],
 };
 
-const image: HTMLImageElement = createSprite(mainCharacterImprovedSpritesheet, () => {
+const image: HTMLImageElement = createSprite(mainCharacterSpritesheet, () => {
     spritesheetDirections.forEach((direction, directionIndex) => {
         for (let animationFrameIndex = 0; animationFrameIndex < animationFramesPerDirection; animationFrameIndex++) {
-            mainCharacterImprovedSprites[direction].push(
+            mainCharacterSprites[direction].push(
                 createSpriteOutOfSpritesheet(
                     image,
-                    getCharacterSpritesheetAabbTile(animationFrameIndex, directionIndex),
+                    getSpritesheetAabbTile(animationFrameIndex, directionIndex, playerSpriteSize),
                 ),
             );
         }
     });
 });
 
-interface MainCharacterImprovedSprite {
+interface MainCharacterSprites {
     up: HTMLCanvasElement[],
     down: HTMLCanvasElement[],
     left: HTMLCanvasElement[],
     right: HTMLCanvasElement[],
 }
 
-export default mainCharacterImprovedSprites;
+export default mainCharacterSprites;

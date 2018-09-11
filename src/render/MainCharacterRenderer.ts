@@ -2,7 +2,7 @@ import MainCharacter from '../main-character/MainCharacter';
 import AABB from '../../helpers/AABB';
 import Size from '../../helpers/Size';
 import Direction from '../../helpers/Direction';
-import mainCharacterImprovedSprites, {playerSpriteSize} from '../sprites/mainCharacterImprovedSprite';
+import mainCharacterSprites, {playerSpriteSize} from '../sprites/mainCharacterSprites';
 
 export default class MainCharacterRenderer {
     private context: CanvasRenderingContext2D;
@@ -22,7 +22,7 @@ export default class MainCharacterRenderer {
         const animationFrame: number = player.velocity.length() < 0.05 ? 0 : (player.distanceTraveled/25 % 4)|0;
 
         this.context.drawImage(
-            mainCharacterImprovedSprites[direction][animationFrame],
+            mainCharacterSprites[direction][animationFrame],
             (player.position.x - spriteSize.width/2),
             (player.position.y - spriteSize.height + playerAABB.height/2 - player.positionZ),
             (spriteSize.width),

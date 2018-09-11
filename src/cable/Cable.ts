@@ -3,11 +3,13 @@ import World from '../world/World';
 import Point from '../../helpers/Point';
 import Computer from './Computer';
 import {GameState} from '../Game';
+import SimpleAngle from '../../helpers/SimpleAngle';
 
 export default class Cable extends WorldObject {
     public health: number;
     public maxHealth: number;
     public computers: Computer[];
+    public angle: SimpleAngle;
 
     constructor(options: CableOptions) {
         super({
@@ -22,6 +24,7 @@ export default class Cable extends WorldObject {
         this.maxHealth = 100;
         this.health = this.maxHealth;
         this.computers = options.computers;
+        this.angle = options.angle;
     }
 
     public update(): void {
@@ -58,7 +61,7 @@ const cableDepth: number = 6;
 interface CableOptions {
     world: World;
     position: Point,
-    angle: 'vertical' | 'horizontal',
+    angle: SimpleAngle,
     length: number,
     computers: Computer[],
 }
