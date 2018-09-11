@@ -16,7 +16,7 @@ export default class Game {
     private world: World;
     private readonly gameRenderer: GameRenderer;
     private readonly gameInput: GameInput;
-    private tick: number;
+    public tick: number;
     public state: GameState;
     private lastStateChange: number;
     public soundPlayer: SoundPlayer;
@@ -31,7 +31,7 @@ export default class Game {
         this.gameInput = new KeyboardAndMouseGameInput(this.gameRenderer.canvas);
         Locator.provideGameInput(this.gameInput);
         this.tick = 0;
-        this.state = GameState.Gameplay;
+        this.state = GameState.SplashScreen;
         this.lastStateChange = 0;
         this.soundPlayer = new SoundPlayer();
         this.world = new World(this);
@@ -74,6 +74,21 @@ export default class Game {
 
     private update(deltaTimeInSeconds: number): void {
         this.tick++;
+
+        if (this.state === GameState.SplashScreen) {
+            if (
+                this.tick - this.lastStateChange > splashScreenForcedCooldown &&
+                (
+                    this.gameInput.bindings.attack.pressed ||
+                    this.gameInput.bindings.jump.pressed
+                )
+            ) {
+                this.restartWorld();
+            }
+
+            return;
+        }
+
         this.world.update();
         this.gameInput.update();
 
@@ -84,8 +99,9 @@ export default class Game {
                     this.gameInput.bindings.attack.pressed ||
                     this.gameInput.bindings.jump.pressed
                 )
-            )
+            ) {
                 this.restartWorld();
+            }
         }
     }
 
@@ -123,3 +139,4 @@ export enum GameState {
 }
 
 const gameOverForcedCooldown: number = 90;
+export const splashScreenForcedCooldown: number = 90;

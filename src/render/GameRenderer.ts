@@ -9,6 +9,7 @@ import ScoreRenderer from './ScoreRenderer';
 import ComputersRenderer from './ComputersRenderer';
 import GameOverRenderer from './GameOverRenderer';
 import Game, {GameState} from '../Game';
+import SplashScreenRenderer from './SplashScreenRenderer';
 
 export const canvasSize: Size = {
     width: 800,
@@ -27,6 +28,7 @@ export default class GameRenderer {
     private computersRenderer: ComputersRenderer;
     private scoreRenderer: ScoreRenderer;
     private gameOverRenderer: GameOverRenderer;
+    private splashScreenRenderer: SplashScreenRenderer;
 
     public constructor(game: Game) {
         this.game = game;
@@ -41,9 +43,16 @@ export default class GameRenderer {
         this.computersRenderer = new ComputersRenderer(this.context);
         this.scoreRenderer = new ScoreRenderer(this.context);
         this.gameOverRenderer = new GameOverRenderer(this.context);
+        this.splashScreenRenderer = new SplashScreenRenderer(this.context);
     }
 
     public render(world: World): void {
+        if (world.game.state === GameState.SplashScreen) {
+            this.splashScreenRenderer.render(world.game);
+
+            return;
+        }
+
         this.clearCanvas();
 
         this.setHitShakeEffect(world);
@@ -103,7 +112,6 @@ export default class GameRenderer {
 
         this.context.imageSmoothingEnabled = false;
         this.context.webkitImageSmoothingEnabled = false;
-        this.context.mozImageSmoothingEnabled = false;
     }
 
     private attachCanvas(): void {
