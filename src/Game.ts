@@ -5,7 +5,6 @@ import GameRenderer from './render/GameRenderer';
 import GameInput from './input/GameInput';
 import World from './world/World';
 import SoundPlayer, {SOUND_NAMES} from './sound/SoundPlayer';
-import Sprites from "./sprites/Sprites";
 
 export default class Game {
     public readonly ticksPerSecond: number;
@@ -21,6 +20,7 @@ export default class Game {
     public state: GameState;
     private lastStateChange: number;
     public soundPlayer: SoundPlayer;
+    public highScore: number;
 
     public constructor() {
         this.ticksPerSecond = 60;
@@ -36,6 +36,7 @@ export default class Game {
         this.lastStateChange = 0;
         this.soundPlayer = new SoundPlayer();
         this.world = new World(this);
+        this.highScore = this.loadHighScore();
         this.initFpsStats();
         this.requestNextFrame();
 
@@ -45,6 +46,7 @@ export default class Game {
     }
 
     public restartWorld(): void {
+        this.updateHighScore(this.world.score);
         this.setState(GameState.Gameplay);
         this.world = new World(this);
     }
@@ -53,6 +55,13 @@ export default class Game {
         if (this.state !== state) {
             this.state = state;
             this.lastStateChange = this.tick;
+        }
+    }
+
+    public updateHighScore(score: number): void {
+        if (score > this.highScore) {
+            this.highScore = score;
+            window.localStorage.setItem(HIGH_SCORE_STORAGE_KEY, score.toString());
         }
     }
 
@@ -118,6 +127,12 @@ export default class Game {
         document.body.appendChild(this.fpsStats.dom);
     }
 
+    private loadHighScore(): number {
+        let highScore: string | null = window.localStorage.getItem(HIGH_SCORE_STORAGE_KEY);
+
+        return highScore ? parseInt(highScore) : 0;
+    }
+
     private playMusic(): void {
         addEventListener(
             'keypress',
@@ -143,3 +158,4 @@ export enum GameState {
 
 const gameOverForcedCooldown: number = 90;
 export const splashScreenForcedCooldown: number = 90;
+export const HIGH_SCORE_STORAGE_KEY: string = 'highScore';

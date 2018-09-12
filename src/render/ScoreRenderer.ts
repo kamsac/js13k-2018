@@ -16,7 +16,8 @@ export default class ScoreRenderer {
         this.context.lineWidth = 2;
 
         this.drawScoreText(world);
-        this.drawStreakText(world);
+        this.drawHighScoreText(world);
+        this.drawHitStreakText(world);
     }
 
     private drawInfoBox(): void {
@@ -36,10 +37,16 @@ export default class ScoreRenderer {
         this.context.strokeText(scoreText, scoreTextLeftMargin, scoreTextTopMargin);
     }
 
-    private drawStreakText(world: World): void {
+    private drawHitStreakText(world: World): void {
         const scoreText: string = `Hit streak: x${world.flyswat.hitStreak}`;
-        this.context.fillText(scoreText, streakTextLeft, streakTextTopMargin);
-        this.context.strokeText(scoreText, streakTextLeft, streakTextTopMargin);
+        this.context.fillText(scoreText, hitStreakTextRightMargin, hitStreakTextTopMargin);
+        this.context.strokeText(scoreText, hitStreakTextRightMargin, hitStreakTextTopMargin);
+    }
+
+    private drawHighScoreText(world: World): void {
+        const scoreText: string = `High score: ${world.game.highScore}`;
+        this.context.fillText(scoreText, highScoreTextLeftMargin, highScoreTextTopMargin);
+        this.context.strokeText(scoreText, highScoreTextLeftMargin, highScoreTextTopMargin);
     }
 }
 
@@ -48,5 +55,8 @@ const infoBoxHeight: number = 120;
 const scoreTextTopMargin: number = 50;
 const scoreTextLeftMargin: number = 60;
 
-const streakTextTopMargin: number = 100;
-const streakTextLeft: number = 60;
+const hitStreakTextTopMargin: number = 50;
+const hitStreakTextRightMargin: number = 400;
+
+const highScoreTextTopMargin: number = 100;
+const highScoreTextLeftMargin: number = 60;
