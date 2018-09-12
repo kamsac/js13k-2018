@@ -34,9 +34,10 @@ function printAvailableSizeLimit(packageSize) {
   const freeSpacePercentage = Math.round(packageSize / MAX_PACKAGE_SIZE * 100 * 100) / 100;
   const chalkColor = freeSpacePercentage <= 80 ? 'green' : (freeSpacePercentage <= 100) ? 'yellow' : 'red';
   console.log(
-    `Final zip file: ` +
+    `Build zip file: ` +
     `${chalk.bold[chalkColor](`${packageSize} bytes`)} ` +
     `out of ${chalk.bold(`${MAX_PACKAGE_SIZE} bytes`)} ` +
-    `(${chalk.bold[chalkColor](`${freeSpacePercentage}%`)})`
+    `(${chalk.bold[chalkColor](`${freeSpacePercentage}%`)}) ` +
+    `(this is before advzip)`
   );
 }
