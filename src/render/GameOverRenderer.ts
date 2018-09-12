@@ -82,7 +82,7 @@ export default class GameOverRenderer {
                 value: `${world.cableTreads}`,
             },
             {
-                key: 'CABLE BITES',
+                key: 'CABLE BUG BITES',
                 value: `${world.cableBites}`,
             },
             {
