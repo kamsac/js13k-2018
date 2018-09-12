@@ -7,6 +7,10 @@ export function createSpriteOutOfSpritesheet(image: HTMLImageElement, tileAabb: 
     canvas.height = tileAabb.height;
 
     const context: CanvasRenderingContext2D = canvas.getContext('2d')!;
+
+    context.imageSmoothingEnabled = false;
+    context.webkitImageSmoothingEnabled = false;
+
     context.drawImage(
         image,
         tileAabb.x, tileAabb.y, tileAabb.width, tileAabb.height,

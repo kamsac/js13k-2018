@@ -117,7 +117,7 @@ export default class World {
 
         const cable3Computers: Computer[] = [
             new Computer(this, this.getWalkingAreaPoint(new Point(200, 400)), 'up'),
-            new Computer(this, this.getWalkingAreaPoint(new Point(660, 150)), 'left'),
+            new Computer(this, this.getWalkingAreaPoint(new Point(650, 150)), 'left'),
         ];
         const cable3: Cable[] = cableBuilder.createCables(
             [
@@ -135,7 +135,7 @@ export default class World {
                 new Point(500, 150),
                 new Point(550, 150),
                 new Point(600, 150),
-                new Point(660, 150),
+                new Point(650, 150),
             ],
             cable3Computers,
         );
@@ -169,7 +169,7 @@ export default class World {
 
         const cable5Computers: Computer[] = [
             new Computer(this, this.getWalkingAreaPoint(new Point(500, 0)), 'down'),
-            new Computer(this, this.getWalkingAreaPoint(new Point(660, 250)), 'left'),
+            new Computer(this, this.getWalkingAreaPoint(new Point(650, 250)), 'left'),
         ];
         const cable5: Cable[] = cableBuilder.createCables(
             [
@@ -181,7 +181,7 @@ export default class World {
                 new Point(500, 250),
                 new Point(550, 250),
                 new Point(600, 250),
-                new Point(660, 250),
+                new Point(650, 250),
             ],
             cable5Computers,
         );
@@ -248,8 +248,8 @@ export default class World {
     }
 }
 
-const wallDepth: number = 10;
-const topMargin: number = 160;
-const leftMargin: number = 60;
-const rightMargin: number = 60;
-const bottomMargin: number = 20;
+const wallDepth: number = 20;
+const topMargin: number = 150;
+const leftMargin: number = 55;
+const rightMargin: number = leftMargin;
+const bottomMargin: number = 10;

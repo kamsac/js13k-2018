@@ -10,6 +10,7 @@ import ComputersRenderer from './ComputersRenderer';
 import GameOverRenderer from './GameOverRenderer';
 import Game, {GameState} from '../Game';
 import SplashScreenRenderer from './SplashScreenRenderer';
+import FloorRenderer from './FloorRenderer';
 
 export const canvasSize: Size = {
     width: 800,
@@ -29,6 +30,7 @@ export default class GameRenderer {
     private scoreRenderer: ScoreRenderer;
     private gameOverRenderer: GameOverRenderer;
     private splashScreenRenderer: SplashScreenRenderer;
+    private floorRenderer: FloorRenderer;
 
     public constructor(game: Game) {
         this.game = game;
@@ -44,6 +46,7 @@ export default class GameRenderer {
         this.scoreRenderer = new ScoreRenderer(this.context);
         this.gameOverRenderer = new GameOverRenderer(this.context);
         this.splashScreenRenderer = new SplashScreenRenderer(this.context);
+        this.floorRenderer = new FloorRenderer(this.context);
     }
 
     public render(world: World): void {
@@ -57,6 +60,7 @@ export default class GameRenderer {
 
         this.setHitShakeEffect(world);
 
+        this.floorRenderer.render(world);
         this.renderWalls(world.roomWalls);
         this.cablesRenderer.render(world);
         this.computersRenderer.render(world);
@@ -76,8 +80,8 @@ export default class GameRenderer {
         }
     }
 
-    private renderWalls(walls: AABB[]) {
-        this.context.fillStyle = '#211';
+    private renderWalls(walls: AABB[]): void {
+        this.context.fillStyle = '#000';
         walls.forEach((wall) => {
             this.context.fillRect(wall.x, wall.y, wall.width, wall.height);
         });

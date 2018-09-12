@@ -1,6 +1,7 @@
 import mainCharacterSprites from './mainCharacterSprites';
 import {createSprite} from './sprite-loaders';
 import cableSprites from './cableSprites';
+import floorTileSprites from './floorSprite';
 
 const insectWalking1 = require('./images/Insect-walking-1.png');
 const insectWalking2 = require('./images/Insect-walking-2.png');
@@ -30,6 +31,7 @@ const Sprites = {
     flyswat: createSprite(flyswat),
     computer,
     cable: cableSprites,
+    floor: floorTileSprites,
 };
 
 export default Sprites;

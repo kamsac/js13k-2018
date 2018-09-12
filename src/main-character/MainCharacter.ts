@@ -104,7 +104,6 @@ export default class MainCharacter extends WorldObject {
     public jump(): void {
         if (!this.isInMidAir()) {
             if (this.velocityZ === 0) {
-                console.log('jump');
                 this.timesJumped++;
                 this.velocityZ = jumpForce;
             }
