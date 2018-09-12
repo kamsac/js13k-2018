@@ -36,7 +36,7 @@ export default class FloorRenderer {
         for (let i = 0; i < tilesCount.width; i++) {
             for (let j = 0; j < tilesCount.height; j++) {
                 context.drawImage(
-                    Sprites.floor[Math.random() < 0.4 ? 1 : (Math.random() * 4)|0],
+                    Sprites.floor[Math.random() < 0.6 ? 1 : (Math.random() * 4)|0],
                     i*spriteRenderSize.width,
                     j*spriteRenderSize.height,
                     spriteRenderSize.width,

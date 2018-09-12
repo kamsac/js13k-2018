@@ -15,9 +15,9 @@ export default class ScoreRenderer {
         this.context.fillStyle = '#fff';
         this.context.lineWidth = 1;
 
-        this.drawScoreText(world);
-        this.drawHighScoreText(world);
-        this.drawHitStreakText(world);
+        this.context.fillText(`Score: ${world.score}`, scoreTextLeftMargin, scoreTextTopMargin);
+        this.context.fillText(`Hit streak: x${world.flyswat.hitStreak}`, hitStreakTextRightMargin, hitStreakTextTopMargin);
+        this.context.fillText(`High score: ${world.game.highScore}`, highScoreTextLeftMargin, highScoreTextTopMargin);
     }
 
     private drawInfoBox(): void {
@@ -29,24 +29,6 @@ export default class ScoreRenderer {
         this.context.moveTo(0, infoBoxHeight);
         this.context.lineTo(canvasSize.width, infoBoxHeight);
         this.context.stroke();
-    }
-
-    private drawScoreText(world: World): void {
-        const scoreText: string = `Score: ${world.score}`;
-        this.context.fillText(scoreText, scoreTextLeftMargin, scoreTextTopMargin);
-        this.context.strokeText(scoreText, scoreTextLeftMargin, scoreTextTopMargin);
-    }
-
-    private drawHitStreakText(world: World): void {
-        const scoreText: string = `Hit streak: x${world.flyswat.hitStreak}`;
-        this.context.fillText(scoreText, hitStreakTextRightMargin, hitStreakTextTopMargin);
-        this.context.strokeText(scoreText, hitStreakTextRightMargin, hitStreakTextTopMargin);
-    }
-
-    private drawHighScoreText(world: World): void {
-        const scoreText: string = `High score: ${world.game.highScore}`;
-        this.context.fillText(scoreText, highScoreTextLeftMargin, highScoreTextTopMargin);
-        this.context.strokeText(scoreText, highScoreTextLeftMargin, highScoreTextTopMargin);
     }
 }
 

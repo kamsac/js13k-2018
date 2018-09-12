@@ -9,7 +9,7 @@ export default class SplashScreenRenderer {
 
     public render(game: Game): void {
         if (game.tick % 5 === 0) {
-            this.context.fillStyle = '#fff';
+            this.context.fillStyle = '#8aa';
             this.context.fillRect(0, 0, canvasSize.width, canvasSize.height);
             this.context.textAlign = 'center';
 
@@ -23,7 +23,13 @@ export default class SplashScreenRenderer {
             if (game.tick > splashScreenForcedCooldown) {
                 this.context.font = 'bold 42px monospace';
                 this.context.strokeStyle = '#000';
+                this.context.fillStyle = 'rgba(255,255,255,0.8)';
                 this.context.lineWidth = 1;
+                this.context.fillText(
+                    'Press spacebar to start.',
+                    canvasSize.width / 2,
+                    canvasSize.height * 4 / 5,
+                );
                 this.context.strokeText(
                     'Press spacebar to start.',
                     canvasSize.width / 2,

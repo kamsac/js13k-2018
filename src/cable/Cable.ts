@@ -5,6 +5,7 @@ import Computer from './Computer';
 import {GameState} from '../Game';
 import SimpleAngle from '../../helpers/SimpleAngle';
 import {SOUND_NAMES} from '../sound/SoundPlayer';
+import getSoundPan from '../../helpers/getSoundPan';
 
 export default class Cable extends WorldObject {
     public health: number;
@@ -40,7 +41,9 @@ export default class Cable extends WorldObject {
             this.health = 0;
         }
         this.world.cableBites++;
-        this.world.game.soundPlayer.playSound(SOUND_NAMES.Bite);
+        this.world.game.soundPlayer.playSound(SOUND_NAMES.Bite, {
+            pan: getSoundPan(this.position),
+        });
     }
 
     public getSteppedOnByMainCharacter(): void {
@@ -49,7 +52,9 @@ export default class Cable extends WorldObject {
             this.health = 0;
         }
         this.world.cableTreads++;
-        this.world.game.soundPlayer.playSound(SOUND_NAMES.Bite);
+        this.world.game.soundPlayer.playSound(SOUND_NAMES.Bite, {
+            pan: getSoundPan(this.position),
+        });
     }
 
     public disconnectComputers(): void {

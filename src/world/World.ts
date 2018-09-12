@@ -75,7 +75,7 @@ export default class World {
 
         const cable1Computers: Computer[] = [
             new Computer(this, this.getWalkingAreaPoint(new Point(0, 200)), 'right'),
-            new Computer(this, this.getWalkingAreaPoint(new Point(300, 0)), 'down'),
+            new Computer(this, this.getWalkingAreaPoint(new Point(300, -5)), 'down'),
         ];
         const cable1: Cable[] = cableBuilder.createCables(
             [
@@ -95,8 +95,8 @@ export default class World {
         );
 
         const cable2Computers: Computer[] = [
-            new Computer(this, this.getWalkingAreaPoint(new Point(200, 0)), 'down'),
-            new Computer(this, this.getWalkingAreaPoint(new Point(300, 400)), 'up'),
+            new Computer(this, this.getWalkingAreaPoint(new Point(200, -5)), 'down'),
+            new Computer(this, this.getWalkingAreaPoint(new Point(300, 395)), 'up'),
         ];
         const cable2: Cable[] = cableBuilder.createCables(
             [
@@ -116,7 +116,7 @@ export default class World {
         );
 
         const cable3Computers: Computer[] = [
-            new Computer(this, this.getWalkingAreaPoint(new Point(200, 400)), 'up'),
+            new Computer(this, this.getWalkingAreaPoint(new Point(200, 395)), 'up'),
             new Computer(this, this.getWalkingAreaPoint(new Point(650, 150)), 'left'),
         ];
         const cable3: Cable[] = cableBuilder.createCables(
@@ -141,7 +141,7 @@ export default class World {
         );
 
         const cable4Computers: Computer[] = [
-            new Computer(this, this.getWalkingAreaPoint(new Point(600, 400)), 'up'),
+            new Computer(this, this.getWalkingAreaPoint(new Point(600, 395)), 'up'),
             new Computer(this, this.getWalkingAreaPoint(new Point(0, 300)), 'right'),
         ];
         const cable4: Cable[] = cableBuilder.createCables(
@@ -168,7 +168,7 @@ export default class World {
         );
 
         const cable5Computers: Computer[] = [
-            new Computer(this, this.getWalkingAreaPoint(new Point(500, 0)), 'down'),
+            new Computer(this, this.getWalkingAreaPoint(new Point(500, -5)), 'down'),
             new Computer(this, this.getWalkingAreaPoint(new Point(650, 250)), 'left'),
         ];
         const cable5: Cable[] = cableBuilder.createCables(

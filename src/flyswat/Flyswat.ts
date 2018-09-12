@@ -3,6 +3,7 @@ import WorldObject from '../world/WorldObject';
 import World, {worldSize} from '../world/World';
 import intersectAABB from '../../helpers/intersectAABB';
 import {SOUND_NAMES} from '../sound/SoundPlayer';
+import getSoundPan from "../../helpers/getSoundPan";
 
 export default class Flyswat extends WorldObject {
     public isHitting: boolean;
@@ -43,7 +44,7 @@ export default class Flyswat extends WorldObject {
         if (this.world.tick - this.lastHit > this.hitCooldown) {
             this.timesUsed++;
             this.world.game.soundPlayer.playSound(SOUND_NAMES.Hit, {
-                pan: (this.position.x / worldSize.width) * 2 - 1,
+                pan: getSoundPan(this.position),
             });
             let killedAnything = false;
             this.isHitting = true;
