@@ -64,6 +64,13 @@ export default class SplashScreenRenderer {
     }
 
     private drawControls(): void {
+        this.context.fillStyle = '#fff';
+        const position: Point = new Point(
+            170,
+            canvasSize.height * 0.5,
+        );
+        this.context.font = 'bold 24px monospace';
+        this.context.fillText('Controls:', 232, position.y - 42);
         drawTable(
             this.context,
             [
@@ -80,12 +87,9 @@ export default class SplashScreenRenderer {
                     value: 'shift, LMB',
                 },
             ],
-            new Point(
-                170,
-                canvasSize.height * 0.5,
-            ),
-            16,
-            24
+            position,
+            24,
+            32
         );
     }
 }
