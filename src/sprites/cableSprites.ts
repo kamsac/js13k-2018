@@ -16,7 +16,7 @@ const cableSpriteSizeRotated: Size = {
 
 const damageSteps: number = 5;
 
-const cableSprites: WireSprites = {
+const cableSprites: ComputerSprites = {
     horizontal: [],
     vertical: [],
 };
@@ -42,7 +42,7 @@ const imageVertical: HTMLImageElement = createSprite(cableVerticalSpritesheet, (
     }
 });
 
-interface WireSprites {
+interface ComputerSprites {
     horizontal: HTMLCanvasElement[],
     vertical: HTMLCanvasElement[],
 }

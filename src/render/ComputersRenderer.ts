@@ -1,8 +1,9 @@
 import World from '../world/World';
 import AABB from '../../helpers/AABB';
 import Sprites from '../sprites/Sprites';
-import Size from '../../helpers/Size';
 import Computer from '../cable/Computer';
+import {ComputerSpriteIndex} from '../sprites/computerSprites';
+import SimpleAngle from "../../helpers/SimpleAngle";
 
 export default class ComputersRenderer {
     private context: CanvasRenderingContext2D;
@@ -14,40 +15,69 @@ export default class ComputersRenderer {
     public render(world: World): void {
         world.computers.forEach((computer) => {
             const computerAABB: AABB = computer.getAABB({roundPositions: true});
-            const computerDirection: 'vertical' | 'horizontal' = (
+            const computerAngle: SimpleAngle = (
                 computer.facingDirection === 'left' || computer.facingDirection === 'right'
             ) ? 'vertical' : 'horizontal';
+
+            const isBlinking: boolean = (computer.world.tick / 5) % 2 === 0 && Math.random() < 0.3;
+            const computerSpriteIndex: number = computer.isConnected
+                ? isBlinking
+                    ? ComputerSpriteIndex.Off
+                    : ComputerSpriteIndex.Green
+                : ComputerSpriteIndex.Red;
+
             this.context.drawImage(
-                Sprites.computer[computerDirection],
-                (computer.position.x - spriteSize.width/2),
-                (computer.position.y - spriteSize.height + computerAABB.height/2),
-                (spriteSize.width),
-                (spriteSize.height),
+                Sprites.computer[computerAngle][computerSpriteIndex],
+                (computer.position.x - spriteRenderSizeByAngle[computerAngle].width/2),
+                (computer.position.y - spriteRenderSizeByAngle[computerAngle].height + computerAABB.height/2),
+                spriteRenderSizeByAngle[computerAngle].width,
+                spriteRenderSizeByAngle[computerAngle].height,
             );
 
-            this.drawStatusLight(computer);
+            this.drawStatusLight(computer, computerAngle);
         });
     }
 
-    private drawStatusLight(computer: Computer): void {
+    private drawStatusLight(computer: Computer, angle: SimpleAngle): void {
         const isBlinking: boolean = (computer.world.tick / 5) % 2 === 0 && Math.random() < 0.3;
-        this.context.fillStyle = computer.isConnected
+        const lightColor = computer.isConnected
             ? isBlinking
-                ? 'black'
-                : 'lime'
-            : 'red';
+                ? 'transparent'
+                : 'rgba(0,255,0,0.2)'
+            : 'rgba(255, 0,0,0.2)';
+        const gradient: CanvasGradient = this.context.createRadialGradient(
+            computer.position.x,
+            computer.position.y + statusLightSpriteYOffsetByAngle[angle],
+            1,
+            computer.position.x,
+            computer.position.y + statusLightSpriteYOffsetByAngle[angle],
+            statusLightSize,
+        );
+        gradient.addColorStop(0, lightColor);
+        gradient.addColorStop(1, 'transparent');
+        this.context.fillStyle = gradient;
         this.context.fillRect(
-            computer.position.x - statusLightSize/2,
-            computer.position.y - statusLightSize/2 - 10,
-            statusLightSize,
-            statusLightSize,
+            computer.position.x - statusLightSize,
+            computer.position.y - statusLightSize + statusLightSpriteYOffsetByAngle[angle],
+            statusLightSize * 2,
+            statusLightSize * 2,
         );
     }
 }
 
-const spriteSize: Size = {
-    width: 42,
-    height: 42,
+const spriteRenderSizeByAngle = {
+    horizontal: {
+        width: 40,
+        height: 24,
+    },
+    vertical: {
+        width: 16,
+        height: 46,
+    }
 };
 
-const statusLightSize: number = 5;
+const statusLightSize: number = 50;
+const statusLightSpriteYOffsetByAngle = {
+    horizontal: -5,
+    vertical: -15,
+}
