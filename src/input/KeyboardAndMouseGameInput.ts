@@ -8,8 +8,8 @@ export default class KeyboardAndMouseGameInput implements GameInput {
         moveDown: getInitialInputBindingValue('moveDown', ['s', 'S', 'ArrowDown']),
         moveLeft: getInitialInputBindingValue('moveLeft', ['a', 'A', 'q', 'Q', 'ArrowLeft']),
         moveRight: getInitialInputBindingValue('moveRight', ['d', 'D', 'ArrowRight']),
-        jump: getInitialInputBindingValue('jump', ['Shift', 'RMB']),
-        attack: getInitialInputBindingValue('attack', ['LMB', ' ']),
+        jump: getInitialInputBindingValue('jump', [' ', 'RMB']),
+        attack: getInitialInputBindingValue('attack', ['Shift', 'LMB']),
     };
 
     private canvas: HTMLCanvasElement;
