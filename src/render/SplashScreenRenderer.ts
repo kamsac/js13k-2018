@@ -1,5 +1,7 @@
 import {canvasSize} from './GameRenderer';
 import Game, {splashScreenForcedCooldown} from '../Game';
+import drawTable from './drawTable';
+import Point from '../../helpers/Point';
 
 export default class SplashScreenRenderer {
     private context: CanvasRenderingContext2D;
@@ -36,6 +38,8 @@ export default class SplashScreenRenderer {
                     canvasSize.height * 4 / 5,
                 );
             }
+
+            this.drawControls();
         }
     }
 
@@ -57,6 +61,32 @@ export default class SplashScreenRenderer {
         this.context.lineWidth = 3;
         this.context.strokeStyle = '#000';
         this.context.strokeText(text, x, y);
+    }
+
+    private drawControls(): void {
+        drawTable(
+            this.context,
+            [
+                {
+                    key: 'Movement',
+                    value: 'WASD, ZQSD, arrows',
+                },
+                {
+                    key: 'Jump',
+                    value: 'spacebar, RMB',
+                },
+                {
+                    key: 'Use flyswatter',
+                    value: 'shift, LMB',
+                },
+            ],
+            new Point(
+                170,
+                canvasSize.height * 0.5,
+            ),
+            16,
+            24
+        );
     }
 }
 
