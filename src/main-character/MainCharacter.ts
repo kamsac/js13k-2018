@@ -15,6 +15,7 @@ export default class MainCharacter extends WorldObject {
     public velocityZ: number;
     public forward: Vector;
     public distanceTraveled: number;
+    public timesJumped: number;
 
     constructor(world: World) {
         super({
@@ -34,6 +35,7 @@ export default class MainCharacter extends WorldObject {
         this.positionZ = 0;
         this.velocityZ = 0;
         this.distanceTraveled = 0;
+        this.timesJumped = 0;
     }
 
     public update(): void {
@@ -101,7 +103,11 @@ export default class MainCharacter extends WorldObject {
 
     public jump(): void {
         if (!this.isInMidAir()) {
-            this.velocityZ = jumpForce;
+            if (this.velocityZ === 0) {
+                console.log('jump');
+                this.timesJumped++;
+                this.velocityZ = jumpForce;
+            }
         }
     }
 

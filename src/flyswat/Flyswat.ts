@@ -2,7 +2,7 @@ import Point from '../../helpers/Point';
 import WorldObject from '../world/WorldObject';
 import World, {worldSize} from '../world/World';
 import intersectAABB from '../../helpers/intersectAABB';
-import {SOUND_NAMES} from "../sound/SoundPlayer";
+import {SOUND_NAMES} from '../sound/SoundPlayer';
 
 export default class Flyswat extends WorldObject {
     public isHitting: boolean;
@@ -10,6 +10,8 @@ export default class Flyswat extends WorldObject {
     private hitCooldown: number;
     public hitStreak: number;
     public highestHitStreak: number;
+    public timesUsed: number;
+    public timesHit: number;
 
     constructor(world: World) {
         super({
@@ -25,6 +27,8 @@ export default class Flyswat extends WorldObject {
         this.isHitting = false;
         this.hitStreak = 0;
         this.highestHitStreak = 0;
+        this.timesUsed = 0;
+        this.timesHit = 0;
     }
 
     public update(): void {
@@ -37,6 +41,7 @@ export default class Flyswat extends WorldObject {
 
     public hit(): void {
         if (this.world.tick - this.lastHit > this.hitCooldown) {
+            this.timesUsed++;
             this.world.game.soundPlayer.playSound(SOUND_NAMES.Hit, {
                 pan: (this.position.x / worldSize.width) * 2 - 1,
             });
@@ -46,6 +51,7 @@ export default class Flyswat extends WorldObject {
                 if (intersectAABB(insect.getAABB(), this.getAABB())) {
                     insect.kill();
                     killedAnything = true;
+                    this.timesHit++;
                 }
             });
             this.lastHit = this.world.tick;

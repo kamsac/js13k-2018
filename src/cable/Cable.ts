@@ -38,6 +38,7 @@ export default class Cable extends WorldObject {
         if (this.health < 0) {
             this.health = 0;
         }
+        this.world.cableBites++;
     }
 
     public getSteppedOnByMainCharacter(): void {
@@ -45,6 +46,7 @@ export default class Cable extends WorldObject {
         if (this.health < 0) {
             this.health = 0;
         }
+        this.world.cableTreads++;
     }
 
     public disconnectComputers(): void {

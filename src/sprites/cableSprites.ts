@@ -47,6 +47,4 @@ interface WireSprites {
     vertical: HTMLCanvasElement[],
 }
 
-console.log(cableSprites);
-
 export default cableSprites;

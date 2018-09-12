@@ -24,6 +24,8 @@ export default class World {
     public cables: Cable[];
     public computers: Computer[];
     public score: number;
+    public cableBites: number;
+    public cableTreads: number;
 
     public constructor(game: Game) {
         this.game = game;
@@ -38,6 +40,8 @@ export default class World {
         this.cables = [];
         this.computers = [];
         this.score = 0;
+        this.cableBites = 0;
+        this.cableTreads = 0;
 
         for (let i = 0; i < 4; i++) {
             this.spawnInsect();

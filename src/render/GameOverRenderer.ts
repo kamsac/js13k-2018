@@ -1,6 +1,8 @@
 import World from '../world/World';
 import {canvasSize} from './GameRenderer';
 import AABB from '../../helpers/AABB';
+import drawTable, {TableRowData} from './drawTable';
+import Point from '../../helpers/Point';
 
 export default class GameOverRenderer {
     private context: CanvasRenderingContext2D;
@@ -11,7 +13,7 @@ export default class GameOverRenderer {
     public render(world: World): void {
         const aabb: AABB = {
             x: 0,
-            y: canvasSize.height/2 - infoBoxHeight/2,
+            y: canvasSize.height/2 - infoBoxHeight/2 + infoBoxTopMargin,
             width: canvasSize.width,
             height: infoBoxHeight,
         };
@@ -22,11 +24,13 @@ export default class GameOverRenderer {
         this.context.lineWidth = 1;
 
         this.drawHeader(aabb);
+        this.drawSummary(aabb, world);
+        this.drawScores(aabb, world);
         this.drawStats(aabb, world);
     }
 
     private drawInfoBox(aabb: AABB): void {
-        this.context.fillStyle = 'rgba(136, 170, 170, 0.9)';
+        this.context.fillStyle = 'rgba(136, 170, 170, 0.7)';
         this.context.strokeStyle = '#000';
         this.context.lineWidth = 4;
 
@@ -34,38 +38,94 @@ export default class GameOverRenderer {
         this.context.strokeRect(aabb.x, aabb.y, aabb.width, aabb.height);
     }
 
-    private drawStats(aabb: AABB, world: World): void {
-        this.context.font = 'bold 32px monospace';
-        this.context.textAlign = 'left';
-
-        const lines: string[] = [
-            `Score: ${world.score}`,
-            `Highest hit streak: x${world.flyswat.highestHitStreak}`,
-            `Connection kept intact for: ${~~(world.ticksSurvivedFor / world.game.ticksPerSecond)}s`,
+    private drawScores(aabb: AABB, world: World): void {
+        const tableData: TableRowData[] = [
+            {
+                key: 'SCORE',
+                value: world.score + '',
+            },
+            {
+                key: 'HIGH SCORE',
+                value: world.game.highScore + '',
+            }
         ];
 
-        lines.forEach((line, index) => {
-            const y: number = aabb.y + statsTextMarginTop + lineHeight*(index+1);
-            this.context.fillText(line, statsTextMarginLeft, y);
-            this.context.strokeText(line, statsTextMarginLeft, y);
-        });
+        drawTable(
+            this.context,
+            tableData,
+            new Point(aabb.x + scoresTextMarginLeft, aabb.y + scoresTextMarginTop),
+            32,
+            64,
+        );
+    }
+
+    private drawStats(aabb: AABB, world: World): void {
+        const tableData: TableRowData[] = [
+            {
+                key: 'BEST HIT STREAK',
+                value: `x${world.flyswat.highestHitStreak}`,
+            },
+            {
+                key: 'FLYSWATTER HITS',
+                value: `${world.flyswat.timesHit}`,
+            },
+            {
+                key: 'FLYSWATTER ACCURACY',
+                value: `${~~(world.flyswat.timesHit / world.flyswat.timesUsed * 100)}%`,
+            },
+            {
+                key: 'JUMPS',
+                value: `${world.player.timesJumped}`,
+            },
+            {
+                key: 'CABLE TREADS',
+                value: `${world.cableTreads}`,
+            },
+            {
+                key: 'CABLE BITES',
+                value: `${world.cableBites}`,
+            },
+            {
+                key: 'STEPS TRAVELED',
+                value: `${~~(world.player.distanceTraveled / 40)}`,
+            },
+        ];
+
+        drawTable(
+            this.context,
+            tableData,
+            new Point(aabb.x + statsTextMarginLeft, aabb.y + statsTextMarginTop),
+            24,
+            24,
+        );
+    }
+
+    private drawSummary(aabb: AABB, world: World) {
+        this.context.font = 'bold 32px monospace';
+        this.context.textAlign = 'center';
+
+        this.context.fillText(
+            `CONNECTION KEPT INTACT FOR: ${~~(world.ticksSurvivedFor / world.game.ticksPerSecond)} SECONDS`,
+            canvasSize.width/2,
+            aabb.y + aabb.height - headerFontSize/2,
+        );
     }
 
     private drawHeader(aabb: AABB): void {
         this.context.font = 'bold 42px monospace';
         this.context.textAlign = 'center';
 
-        const y: number = aabb.y + lineHeight;
-        const x: number = canvasSize.width/2;
-        const text: string = 'GAME OVER';
-        this.context.fillText(text, x, y);
-        this.context.strokeText(text, x, y);
+        this.context.fillText('GAME OVER', canvasSize.width/2, aabb.y + headerFontSize);
     }
 }
 
-const infoBoxHeight: number = 200;
+const infoBoxHeight: number = 300;
+const infoBoxTopMargin: number = 50;
 
-const lineHeight: number = 42;
+const headerFontSize: number = 42;
 
-const statsTextMarginTop: number = lineHeight;
-const statsTextMarginLeft: number = 60;
+const scoresTextMarginTop: number = headerFontSize * 2;
+const scoresTextMarginLeft: number = 30;
+
+const statsTextMarginTop: number = scoresTextMarginTop - 5;
+const statsTextMarginLeft: number = 400;
