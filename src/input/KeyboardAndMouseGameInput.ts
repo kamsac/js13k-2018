@@ -53,20 +53,6 @@ export default class KeyboardAndMouseGameInput implements GameInput {
     private initMouse(): void {
         this.canvas.oncontextmenu = () => false;
 
-        // this.canvas.addEventListener('mousemove', (event: MouseEvent) => {
-        //     if (event.movementX < 0) {
-        //         this.updateInput('MML', event.movementX);
-        //     } else {
-        //         this.updateInput('MML', 0);
-        //     }
-        //
-        //     if (event.movementX > 0) {
-        //         this.updateInput('MMR', event.movementX);
-        //     } else {
-        //         this.updateInput('MMR', 0);
-        //     }
-        // });
-
         this.canvas.addEventListener('mousedown', (event: MouseEvent) => {
             this.canvas.requestPointerLock();
             const buttonName: string = getFriendlyMouseButtonKeyName(event);
