@@ -2,6 +2,8 @@ const CPlayer = require('../../libraries-that-dont-care-about-npm/soundbox-playe
 
 import gameplayMusic from './data/gameplayMusic';
 import hitSound from './data/hitSound';
+import biteSound from './data/biteSound';
+import jumpSound from './data/jumpSound';
 
 export default class SoundPlayer {
     private soundsData: SoundsData[];
@@ -17,6 +19,14 @@ export default class SoundPlayer {
             {
                 name: SOUND_NAMES.Hit,
                 data: hitSound,
+            },
+            {
+                name: SOUND_NAMES.Bite,
+                data: biteSound,
+            },
+            {
+                name: SOUND_NAMES.Jump,
+                data: jumpSound,
             },
         ];
         this.prepareSounds();
@@ -64,6 +74,8 @@ export default class SoundPlayer {
 export const SOUND_NAMES = {
     GameplayMusic: 'GameplayMusic',
     Hit: 'Hit',
+    Bite: 'Bite',
+    Jump: 'Jump',
 };
 
 interface PlaySoundOptions {

@@ -5,6 +5,7 @@ import World, {worldSize} from '../world/World';
 import intersectAABB from '../../helpers/intersectAABB';
 import WorldObject from '../world/WorldObject';
 import Cable from '../cable/Cable';
+import {SOUND_NAMES} from '../sound/SoundPlayer';
 
 export default class MainCharacter extends WorldObject {
     private inputManager: PlayerCharacterInputManager;
@@ -104,6 +105,7 @@ export default class MainCharacter extends WorldObject {
     public jump(): void {
         if (!this.isInMidAir()) {
             if (this.velocityZ === 0) {
+                this.world.game.soundPlayer.playSound(SOUND_NAMES.Jump);
                 this.timesJumped++;
                 this.velocityZ = jumpForce;
             }
