@@ -34,12 +34,11 @@ export default class ComputersRenderer {
                 spriteRenderSizeByAngle[computerAngle].height,
             );
 
-            this.drawStatusLight(computer, computerAngle);
+            this.drawStatusLight(computer, computerAngle, isBlinking);
         });
     }
 
-    private drawStatusLight(computer: Computer, angle: SimpleAngle): void {
-        const isBlinking: boolean = (computer.world.tick / 5) % 2 === 0 && Math.random() < 0.3;
+    private drawStatusLight(computer: Computer, angle: SimpleAngle, isBlinking: boolean): void {
         const lightColor = computer.isConnected
             ? isBlinking
                 ? 'transparent'

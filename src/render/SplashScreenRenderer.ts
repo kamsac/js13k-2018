@@ -1,6 +1,6 @@
 import {canvasSize} from './GameRenderer';
 import Game, {splashScreenForcedCooldown} from '../Game';
-import drawTable from './drawTable';
+import drawTable from '../../helpers/drawTable';
 import Point from '../../helpers/Point';
 
 export default class SplashScreenRenderer {

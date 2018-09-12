@@ -1,4 +1,4 @@
-import Point from '../../helpers/Point';
+import Point from './Point';
 
 export default function drawTable(
     context: CanvasRenderingContext2D,
