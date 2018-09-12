@@ -13,9 +13,9 @@ export default class SplashScreenRenderer {
             this.context.fillRect(0, 0, canvasSize.width, canvasSize.height);
             this.context.textAlign = 'center';
 
-            this.context.font = 'bold 60px monospace';
+            this.context.font = 'bold 64px monospace';
             this.drawTitleText(
-                'THE SERVICE PROVIDER',
+                'Ｓｅｒｖｉｃｅ Ｐｒｏｖｉｄｅｒ',
                 canvasSize.width / 2,
                 canvasSize.height / 4,
             );

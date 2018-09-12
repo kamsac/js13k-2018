@@ -13,7 +13,7 @@ export default class ScoreRenderer {
         this.context.font = 'bold 42px monospace';
         this.context.textAlign = 'left';
         this.context.fillStyle = '#fff';
-        this.context.lineWidth = 2;
+        this.context.lineWidth = 1;
 
         this.drawScoreText(world);
         this.drawHighScoreText(world);

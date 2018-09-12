@@ -30,7 +30,7 @@ export default class GameOverRenderer {
     }
 
     private drawInfoBox(aabb: AABB): void {
-        this.context.fillStyle = 'rgba(136, 170, 170, 0.7)';
+        this.context.fillStyle = 'rgba(136, 170, 170, 0.5)';
         this.context.strokeStyle = '#000';
         this.context.lineWidth = 4;
 
@@ -55,7 +55,7 @@ export default class GameOverRenderer {
             tableData,
             new Point(aabb.x + scoresTextMarginLeft, aabb.y + scoresTextMarginTop),
             32,
-            64,
+            48,
         );
     }
 
@@ -124,7 +124,7 @@ const infoBoxTopMargin: number = 50;
 
 const headerFontSize: number = 42;
 
-const scoresTextMarginTop: number = headerFontSize * 2;
+const scoresTextMarginTop: number = headerFontSize * 2.1;
 const scoresTextMarginLeft: number = 30;
 
 const statsTextMarginTop: number = scoresTextMarginTop - 5;
