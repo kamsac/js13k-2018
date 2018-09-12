@@ -15,7 +15,7 @@ module.exports = merge(common, {
   devtool: 'source-map',
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'js13k-2018',
+      title: 'Service Provider (js13k 2018)',
       template: path.resolve(rootPath, 'src/index.html'),
     }),
   ]
