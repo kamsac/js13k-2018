@@ -107,7 +107,7 @@ export default class MainCharacter extends WorldObject {
     }
 
     public jump(): void {
-        if (!this.isInMidAir()) {
+        if (!this.isInMidAir() && this.world.tick > 10) {
             if (this.velocityZ === 0) {
                 this.world.game.soundPlayer.playSound(SOUND_NAMES.Jump, {
                     pan: getSoundPan(this.position),
