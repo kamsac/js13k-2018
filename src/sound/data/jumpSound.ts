@@ -35,7 +35,7 @@ const jumpSound = {
                 55, // FX_FREQ
                 0, // FX_RESONANCE
                 255, // FX_DIST
-                25, // FX_DRIVE
+                75, // FX_DRIVE
                 0, // FX_PAN_AMT
                 6, // FX_PAN_FREQ
                 0, // FX_DELAY_AMT
