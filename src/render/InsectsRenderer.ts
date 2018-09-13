@@ -1,5 +1,5 @@
 import World from '../world/World';
-import AABB from '../../helpers/AABB';
+import AABB from '../helpers/AABB';
 import Sprites from '../sprites/Sprites';
 
 export default class InsectsRenderer {

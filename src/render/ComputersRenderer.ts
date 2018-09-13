@@ -1,9 +1,9 @@
 import World from '../world/World';
-import AABB from '../../helpers/AABB';
+import AABB from '../helpers/AABB';
 import Sprites from '../sprites/Sprites';
 import Computer from '../cable/Computer';
 import {ComputerSpriteIndex} from '../sprites/computerSprites';
-import SimpleAngle from "../../helpers/SimpleAngle";
+import SimpleAngle from "../helpers/SimpleAngle";
 
 export default class ComputersRenderer {
     private context: CanvasRenderingContext2D;

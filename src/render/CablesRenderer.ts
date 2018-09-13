@@ -1,8 +1,8 @@
 import World from '../world/World';
-import AABB from '../../helpers/AABB';
+import AABB from '../helpers/AABB';
 import Sprites from '../sprites/Sprites';
-import Size from '../../helpers/Size';
-import SimpleAngle from '../../helpers/SimpleAngle';
+import Size from '../helpers/Size';
+import SimpleAngle from '../helpers/SimpleAngle';
 
 export default class CablesRenderer {
     private context: CanvasRenderingContext2D;

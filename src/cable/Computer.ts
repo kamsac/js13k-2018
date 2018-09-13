@@ -1,5 +1,5 @@
-import Point from '../../helpers/Point';
-import Direction from '../../helpers/Direction';
+import Point from '../helpers/Point';
+import Direction from '../helpers/Direction';
 import WorldObject from '../world/WorldObject';
 import World from '../world/World';
 

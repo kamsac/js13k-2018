@@ -1,5 +1,5 @@
-import AABB from '../../helpers/AABB';
-import Size from '../../helpers/Size';
+import AABB from '../helpers/AABB';
+import Size from '../helpers/Size';
 
 export function createSpriteOutOfSpritesheet(image: HTMLImageElement, tileAabb: AABB): HTMLCanvasElement {
     let canvas: HTMLCanvasElement = document.createElement('canvas');

@@ -1,6 +1,6 @@
-import Size from '../../helpers/Size';
+import Size from '../helpers/Size';
 import World from '../world/World';
-import AABB from '../../helpers/AABB';
+import AABB from '../helpers/AABB';
 import MainCharacterRenderer from './MainCharacterRenderer';
 import FlyswatRenderer, {isFlyswatBehindPlayer} from './FlyswatRenderer';
 import InsectsRenderer from './InsectsRenderer';

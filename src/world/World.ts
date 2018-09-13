@@ -1,11 +1,11 @@
-import Size from '../../helpers/Size';
+import Size from '../helpers/Size';
 import {canvasSize} from '../render/GameRenderer';
 import MainCharacter from '../main-character/MainCharacter';
-import AABB from '../../helpers/AABB';
+import AABB from '../helpers/AABB';
 import Flyswat from '../flyswat/Flyswat';
 import Insect from '../insect/Insect';
 import Cable from '../cable/Cable';
-import Point from '../../helpers/Point';
+import Point from '../helpers/Point';
 import CableBuilder from '../cable/CableBuilder';
 import Game, {GameState} from '../Game';
 import Computer from '../cable/Computer';

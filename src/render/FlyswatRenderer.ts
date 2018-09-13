@@ -1,10 +1,10 @@
 import World from '../world/World';
-import AABB from '../../helpers/AABB';
+import AABB from '../helpers/AABB';
 import Sprites from '../sprites/Sprites';
-import Point from '../../helpers/Point';
+import Point from '../helpers/Point';
 import MainCharacter from '../main-character/MainCharacter';
 import {playerRenderSize} from './MainCharacterRenderer';
-import Direction from '../../helpers/Direction';
+import Direction from '../helpers/Direction';
 
 export default class FlyswatRenderer {
     private context: CanvasRenderingContext2D;

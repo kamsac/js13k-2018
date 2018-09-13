@@ -1,6 +1,6 @@
 import World from '../world/World';
 import Sprites from '../sprites/Sprites';
-import Size from '../../helpers/Size';
+import Size from '../helpers/Size';
 
 export default class FloorRenderer {
     private context: CanvasRenderingContext2D;

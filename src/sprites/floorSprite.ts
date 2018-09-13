@@ -1,4 +1,4 @@
-import Size from '../../helpers/Size';
+import Size from '../helpers/Size';
 import {createSprite, createSpriteOutOfSpritesheet, getSpritesheetAabbTile} from './sprite-loaders';
 
 const floorSpritesheet = require('./images/FloorSpritesheet.png');

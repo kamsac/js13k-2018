@@ -1,5 +1,5 @@
-import Size from '../../helpers/Size';
-import Direction from '../../helpers/Direction';
+import Size from '../helpers/Size';
+import Direction from '../helpers/Direction';
 import {createSprite, createSpriteOutOfSpritesheet, getSpritesheetAabbTile} from './sprite-loaders';
 
 const mainCharacterSpritesheet = require('./images/MainCharacterSpritesheet.png');

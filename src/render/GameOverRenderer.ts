@@ -1,8 +1,8 @@
 import World from '../world/World';
 import {canvasSize} from './GameRenderer';
-import AABB from '../../helpers/AABB';
-import drawTable, {TableRowData} from '../../helpers/drawTable';
-import Point from '../../helpers/Point';
+import AABB from '../helpers/AABB';
+import drawTable, {TableRowData} from '../helpers/drawTable';
+import Point from '../helpers/Point';
 
 export default class GameOverRenderer {
     private context: CanvasRenderingContext2D;

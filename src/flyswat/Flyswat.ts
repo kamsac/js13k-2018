@@ -1,8 +1,8 @@
 import WorldObject from '../world/WorldObject';
 import World from '../world/World';
-import intersectAABB from '../../helpers/intersectAABB';
+import intersectAABB from '../helpers/intersectAABB';
 import {SOUND_NAMES} from '../sound/SoundPlayer';
-import getSoundPan from "../../helpers/getSoundPan";
+import getSoundPan from "../helpers/getSoundPan";
 
 export default class Flyswat extends WorldObject {
     public isHitting: boolean;

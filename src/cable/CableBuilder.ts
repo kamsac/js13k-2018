@@ -1,4 +1,4 @@
-import Point from '../../helpers/Point';
+import Point from '../helpers/Point';
 import Cable from './Cable';
 import World from '../world/World';
 import Computer from './Computer';

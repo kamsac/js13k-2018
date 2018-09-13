@@ -1,12 +1,12 @@
 import PlayerCharacterInputManager from './PlayerCharacterInputManager';
-import Point from '../../helpers/Point';
-import Vector from '../../helpers/Vector';
+import Point from '../helpers/Point';
+import Vector from '../helpers/Vector';
 import World, {worldSize} from '../world/World';
-import intersectAABB from '../../helpers/intersectAABB';
+import intersectAABB from '../helpers/intersectAABB';
 import WorldObject from '../world/WorldObject';
 import Cable from '../cable/Cable';
 import {SOUND_NAMES} from '../sound/SoundPlayer';
-import getSoundPan from '../../helpers/getSoundPan';
+import getSoundPan from '../helpers/getSoundPan';
 
 export default class MainCharacter extends WorldObject {
     private inputManager: PlayerCharacterInputManager;

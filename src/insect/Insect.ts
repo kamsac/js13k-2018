@@ -1,9 +1,9 @@
 import WorldObject from '../world/WorldObject';
-import Point from '../../helpers/Point';
+import Point from '../helpers/Point';
 import World from '../world/World';
-import Vector from '../../helpers/Vector';
-import Size from '../../helpers/Size';
-import intersectAABB from '../../helpers/intersectAABB';
+import Vector from '../helpers/Vector';
+import Size from '../helpers/Size';
+import intersectAABB from '../helpers/intersectAABB';
 import Cable from '../cable/Cable';
 
 export default class Insect extends WorldObject {

@@ -1,7 +1,7 @@
 import MainCharacter from '../main-character/MainCharacter';
-import AABB from '../../helpers/AABB';
-import Size from '../../helpers/Size';
-import Direction from '../../helpers/Direction';
+import AABB from '../helpers/AABB';
+import Size from '../helpers/Size';
+import Direction from '../helpers/Direction';
 import mainCharacterSprites, {playerSpriteSize} from '../sprites/mainCharacterSprites';
 
 export default class MainCharacterRenderer {

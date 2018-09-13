@@ -1,11 +1,11 @@
 import WorldObject from '../world/WorldObject';
 import World from '../world/World';
-import Point from '../../helpers/Point';
+import Point from '../helpers/Point';
 import Computer from './Computer';
 import {GameState} from '../Game';
-import SimpleAngle from '../../helpers/SimpleAngle';
+import SimpleAngle from '../helpers/SimpleAngle';
 import {SOUND_NAMES} from '../sound/SoundPlayer';
-import getSoundPan from '../../helpers/getSoundPan';
+import getSoundPan from '../helpers/getSoundPan';
 
 export default class Cable extends WorldObject {
     public health: number;
