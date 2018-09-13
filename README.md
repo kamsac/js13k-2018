@@ -1,4 +1,4 @@
-# js13k-2018 - Service Keeper
+# js13k-2018 - Service Provider
 
 This is a game made for js13k 2018 gamejam. The theme is `offline`.
 
