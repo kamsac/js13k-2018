@@ -158,4 +158,4 @@ export enum GameState {
 
 const gameOverForcedCooldown: number = 90;
 export const splashScreenForcedCooldown: number = 90;
-export const HIGH_SCORE_STORAGE_KEY: string = 'highScore';
+export const HIGH_SCORE_STORAGE_KEY: string = 'SERVICE_PROVIDER:highScore';
