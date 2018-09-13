@@ -12,6 +12,7 @@ export default class Cable extends WorldObject {
     public maxHealth: number;
     public computers: Computer[];
     public angle: SimpleAngle;
+    public lastDamageTick: number;
 
     constructor(options: CableOptions) {
         super({
@@ -27,6 +28,7 @@ export default class Cable extends WorldObject {
         this.health = this.maxHealth;
         this.computers = options.computers;
         this.angle = options.angle;
+        this.lastDamageTick = -9999;
     }
 
     public update(): void {
@@ -40,6 +42,7 @@ export default class Cable extends WorldObject {
         if (this.health < 0) {
             this.health = 0;
         }
+        this.lastDamageTick = this.world.tick;
         this.world.cableBites++;
         this.world.game.soundPlayer.playSound(SOUND_NAMES.Bite, {
             pan: getSoundPan(this.position),
@@ -52,6 +55,7 @@ export default class Cable extends WorldObject {
         if (this.health < 0) {
             this.health = 0;
         }
+        this.lastDamageTick = this.world.tick;
         this.world.cableTreads++;
         this.world.game.soundPlayer.playSound(SOUND_NAMES.Bite, {
             pan: getSoundPan(this.position),

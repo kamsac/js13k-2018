@@ -41,6 +41,15 @@ export default class CablesRenderer {
                 renderAabb.width|0,
                 renderAabb.height|0,
             );
+
+            const damageIndicatorProgress: number = Math.min((world.tick - cable.lastDamageTick) / cableDamageIndicatorDuration, 1);
+            this.context.fillStyle = `rgba(255,0,0,${(1-damageIndicatorProgress)/2})`;
+            this.context.fillRect(
+                renderAabb.x|0,
+                renderAabb.y|0,
+                renderAabb.width|0,
+                renderAabb.height|0,
+            );
         });
     }
 }
@@ -50,3 +59,4 @@ const spriteRenderSize: Size = {
     width: 50,
     height: 8,
 };
+const cableDamageIndicatorDuration: number = 100;
