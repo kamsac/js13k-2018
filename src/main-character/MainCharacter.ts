@@ -7,6 +7,7 @@ import WorldObject from '../world/WorldObject';
 import Cable from '../cable/Cable';
 import {SOUND_NAMES} from '../sound/SoundPlayer';
 import getSoundPan from '../helpers/getSoundPan';
+import {GameState} from '../Game';
 
 export default class MainCharacter extends WorldObject {
     private inputManager: PlayerCharacterInputManager;
@@ -74,7 +75,9 @@ export default class MainCharacter extends WorldObject {
             this.velocityZ = 0;
         }
 
-        this.distanceTraveled += this.isInMidAir() ? this.velocity.length()/2 : this.velocity.length();
+        if (this.world.game.state === GameState.Gameplay) {
+            this.distanceTraveled += this.isInMidAir() ? this.velocity.length() / 2 : this.velocity.length();
+        }
 
         if (!this.isInMidAir()) {
             this.world.cables.forEach((cable) => {

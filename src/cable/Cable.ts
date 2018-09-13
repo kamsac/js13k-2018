@@ -43,7 +43,11 @@ export default class Cable extends WorldObject {
             this.health = 0;
         }
         this.lastDamageTick = this.world.tick;
-        this.world.cableBites++;
+
+        if (this.world.game.state === GameState.Gameplay) {
+            this.world.cableBites++;
+        }
+
         this.world.game.soundPlayer.playSound(SOUND_NAMES.Bite, {
             pan: getSoundPan(this.position),
             volume: 1,
@@ -56,7 +60,11 @@ export default class Cable extends WorldObject {
             this.health = 0;
         }
         this.lastDamageTick = this.world.tick;
-        this.world.cableTreads++;
+
+        if (this.world.game.state === GameState.Gameplay) {
+            this.world.cableTreads++;
+        }
+
         this.world.game.soundPlayer.playSound(SOUND_NAMES.Bite, {
             pan: getSoundPan(this.position),
             volume: 1,
