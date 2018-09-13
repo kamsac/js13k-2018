@@ -108,6 +108,7 @@ export default class MainCharacter extends WorldObject {
             if (this.velocityZ === 0) {
                 this.world.game.soundPlayer.playSound(SOUND_NAMES.Jump, {
                     pan: getSoundPan(this.position),
+                    volume: 1,
                 });
                 this.timesJumped++;
                 this.velocityZ = jumpForce;

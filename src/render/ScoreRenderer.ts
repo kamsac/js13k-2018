@@ -10,7 +10,7 @@ export default class ScoreRenderer {
     public render(world: World): void {
         this.drawInfoBox();
 
-        this.context.font = 'bold 42px monospace';
+        this.context.font = 'bold 36px monospace';
         this.context.textAlign = 'left';
         this.context.fillStyle = '#fff';
         this.context.lineWidth = 1;
@@ -34,11 +34,11 @@ export default class ScoreRenderer {
 
 const infoBoxHeight: number = 120;
 
-const scoreTextTopMargin: number = 50;
+const scoreTextTopMargin: number = 45;
 const scoreTextLeftMargin: number = 60;
 
-const hitStreakTextTopMargin: number = 50;
+const hitStreakTextTopMargin: number = 45;
 const hitStreakTextRightMargin: number = 400;
 
-const highScoreTextTopMargin: number = 100;
+const highScoreTextTopMargin: number = 95;
 const highScoreTextLeftMargin: number = 60;

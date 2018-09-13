@@ -43,6 +43,7 @@ export default class Cable extends WorldObject {
         this.world.cableBites++;
         this.world.game.soundPlayer.playSound(SOUND_NAMES.Bite, {
             pan: getSoundPan(this.position),
+            volume: 1,
         });
     }
 
@@ -54,6 +55,7 @@ export default class Cable extends WorldObject {
         this.world.cableTreads++;
         this.world.game.soundPlayer.playSound(SOUND_NAMES.Bite, {
             pan: getSoundPan(this.position),
+            volume: 1,
         });
     }
 
