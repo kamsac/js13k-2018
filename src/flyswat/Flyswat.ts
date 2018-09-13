@@ -1,6 +1,5 @@
-import Point from '../../helpers/Point';
 import WorldObject from '../world/WorldObject';
-import World, {worldSize} from '../world/World';
+import World from '../world/World';
 import intersectAABB from '../../helpers/intersectAABB';
 import {SOUND_NAMES} from '../sound/SoundPlayer';
 import getSoundPan from "../../helpers/getSoundPan";
@@ -17,7 +16,7 @@ export default class Flyswat extends WorldObject {
     constructor(world: World) {
         super({
             world,
-            position: new Point(0, 0),
+            position: world.player.position,
             collisionMask: {
                 width: world.player.collisionMask.width * 1.5,
                 height: world.player.collisionMask.height * 1.5,
